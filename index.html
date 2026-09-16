@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskUp Pro - Earn Money Daily</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{font-family:'Plus Jakarta Sans',sans-serif}
+body{background:#080a12; color:white; overflow-x:hidden}
+.glass{background:rgba(255,255,255,0.06); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1)}
+.gradient-text{background:linear-gradient(90deg,#00D2FF,#928DFF,#FF3BD4); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+.gradient-btn{background:linear-gradient(90deg,#00D2FF,#7A5CFF); transition:0.3s; box-shadow:0 0 20px rgba(122,92,255,0.4)}
+.gradient-btn:hover{transform:translateY(-2px); box-shadow:0 0 30px rgba(122,92,255,0.6)}
+.task-card{transition:0.3s}
+.task-card:hover{transform:translateY(-3px); border-color:rgba(122,92,255,0.5)}
+.blur-ball{position:absolute; width:400px; height:400px; filter:blur(100px); border-radius:50%; z-index:-1; opacity:0.5}
+.modal{position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); z-index:50; display:none; align-items:center; justify-content:center; padding:20px}
+.modal.active{display:flex}
+</style>
+</head>
+<body class="p-4 md:p-6 max-w-[480px] mx-auto relative">
+
+<div class="blur-ball bg-[#7A5CFF] top-[-100px] left-[-100px]"></div>
+<div class="blur-ball bg-[#00D2FF] top-[200px] right-[-150px]"></div>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="min-h-[90vh] flex flex-col justify-center">
+  <div class="glass rounded-[28px] p-7 text-center">
+    <div class="w-16 h-16 gradient-btn rounded-2xl flex items-center justify-center mx-auto text-3xl">💎</div>
+    <h1 class="text-[32px] font-extrabold mt-4">TaskUp <span class="gradient-text">PRO</span></h1>
+    <p class="text-white/60 text-[14px] mt-1">Earn Rs.25 / Refer + Daily Tasks</p>
+    <div class="mt-8 space-y-3">
+      <input id="username" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-[#7A5CFF]" placeholder="Username">
+      <input id="password" type="password" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-[#7A5CFF]" placeholder="Password">
+      <button onclick="register()" class="gradient-btn w-full rounded-2xl py-4 font-bold text-[16px]">Continue → Create Account</button>
+      <p id="refMsg" class="text-[#00FF88] text-sm bg-[#00FF88]/10 py-2 rounded-xl hidden"></p>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN PAGE -->
+<div id="mainPage" style="display:none" class="space-y-4 pb-10">
+  <div class="glass rounded-[28px] p-6">
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-white/50 text-[11px] tracking-widest uppercase">Welcome back</p>
+        <h2 class="text-xl font-bold"><span id="userName"></span> 👋</h2>
+      </div>
+      <button onclick="logout()" class="bg-white/10 px-4 py-2 rounded-full text-xs">Logout</button>
+    </div>
+    <div class="mt-6">
+      <p class="text-white/50 text-[12px]">TOTAL BALANCE</p>
+      <h1 class="text-[42px] font-[800] leading-none">Rs <span id="bal">0</span></h1>
+      <div class="flex gap-2 mt-3">
+        <span class="bg-white/10 px-3 py-1.5 rounded-full text-[11px]">👥 <span id="refs">0</span> Referrals</span>
+        <span class="bg-[#00FF88]/15 text-[#00FF88] px-3 py-1.5 rounded-full text-[11px]">✓ Min Withdraw Rs 500</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERRAL CARD WITH TEAM BUTTON -->
+  <div class="glass rounded-[28px] p-6">
+    <div class="flex justify-between items-center">
+      <h3 class="font-bold">👥 Referral Program</h3>
+      <span class="text-[11px] bg-[#00D2FF]/20 text-[#00D2FF] px-2.5 py-1 rounded-full">Rs 25 / Refer</span>
+    </div>
+    <div class="flex gap-2 mt-4">
+      <input id="refLink" readonly class="flex-1 bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-xs text-white/70">
+      <button onclick="copyRef()" class="bg-white text-black px-6 rounded-xl font-bold text-sm">Copy</button>
+    </div>
+    <div class="grid grid-cols-2 gap-2 mt-3">
+      <button onclick="shareWA()" class="bg-[#25D366] rounded-xl py-3 font-bold text-sm">WhatsApp Share 🚀</button>
+      <button onclick="openTeam()" class="bg-white/10 border border-white/10 rounded-xl py-3 font-bold text-sm">👀 My Team Progress</button>
+    </div>
+  </div>
+
+  <!-- TASKS -->
+  <div class="glass rounded-[28px] p-6">
+    <h3 class="font-bold mb-4">🔥 Daily Tasks</h3>
+    <div id="tasksList" class="space-y-3"></div>
+  </div>
+
+  <!-- WITHDRAW -->
+  <div class="glass rounded-[28px] p-6">
+    <h3 class="font-bold">💸 Withdraw</h3>
+    <input id="accNum" placeholder="03xxxxxxxx - Easypaisa / JazzCash" class="w-full mt-4 bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 outline-none">
+    <input id="amount" type="number" placeholder="Amount (Min 500)" class="w-full mt-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 outline-none">
+    <button onclick="withdraw()" class="w-full mt-4 bg-white text-black rounded-xl py-4 font-extrabold">Request Withdraw</button>
+    <p id="wMsg" class="text-center text-sm mt-3"></p>
+  </div>
+
+  <!-- WITHDRAWAL HISTORY - NEW -->
+  <div class="glass rounded-[28px] p-6">
+    <h3 class="font-bold">📜 Withdrawal History</h3>
+    <div id="historyList" class="mt-4 space-y-2"></div>
+  </div>
+</div>
+
+<!-- TEAM MODAL - NEW -->
+<div id="teamModal" class="modal" onclick="closeTeam(event)">
+  <div class="glass rounded-[28px] p-6 w-full max-w-[400px] max-h-[80vh] overflow-auto" onclick="event.stopPropagation()">
+    <div class="flex justify-between items-center">
+      <h3 class="font-bold text-lg">👥 My Team Progress</h3>
+      <button onclick="document.getElementById('teamModal').classList.remove('active')" class="bg-white/10 w-8 h-8 rounded-full">✕</button>
+    </div>
+    <div class="grid grid-cols-3 gap-2 mt-4">
+      <div class="bg-white/5 rounded-2xl p-3 text-center"><p class="text-white/40 text-[10px]">TOTAL TEAM</p><h2 id="teamCount" class="text-xl font-bold">0</h2></div>
+      <div class="bg-[#00D2FF]/10 rounded-2xl p-3 text-center"><p class="text-white/40 text-[10px]">TEAM EARN</p><h2 id="teamEarn" class="text-xl font-bold text-[#00D2FF]">Rs 0</h2></div>
+      <div class="bg-[#00FF88]/10 rounded-2xl p-3 text-center"><p class="text-white/40 text-[10px]">MY REF EARN</p><h2 id="refEarn" class="text-xl font-bold text-[#00FF88]">Rs 0</h2></div>
+    </div>
+    <div id="teamList" class="mt-5 space-y-2"></div>
+  </div>
+</div>
+
+<script>
+let params = new URLSearchParams(window.location.search);
+let refId = params.get('ref');
+let users = JSON.parse(localStorage.getItem('taskup_users') || "{}");
+let currentUser = localStorage.getItem('taskup_current');
+let tasks = [
+  {icon:"✈️", name:"Join Telegram Channel", reward:20, link:"https://t.me/YourChannel"},
+  {icon:"📸", name:"Follow on Instagram", reward:15, link:"https://instagram.com"},
+  {icon:"▶️", name:"Subscribe YouTube", reward:20, link:"https://youtube.com"},
+  {icon:"🎁", name:"Daily Check-in Bonus", reward:5, link:""}
+];
+
+function save(){ localStorage.setItem('taskup_users', JSON.stringify(users)); }
+if(refId){
+  let el = document.getElementById('refMsg');
+  el.classList.remove('hidden');
+  el.innerText = "🎁 Referral Active: "+refId;
+}
+
+function register(){
+ let u = document.getElementById('username').value.trim();
+ let p = document.getElementById('password').value.trim();
+ if(!u ||!p){ alert("Username / Password likho"); return; }
+ if(!users[u]){
+   users[u] = {pass:btoa(p), balance:50, refs:0, id:Date.now().toString().slice(-6), joined: new Date().toISOString(), myTeam:[]};
+   if(refId){
+     let refUserKey = Object.keys(users).find(k=>users[k].id==refId);
+     if(refUserKey && refUserKey!== u){
+       users[refUserKey].balance += 25;
+       users[refUserKey].refs += 1;
+       if(!users[refUserKey].myTeam) users[refUserKey].myTeam=[];
+       users[refUserKey].myTeam.push({name:u, date:new Date().toLocaleDateString(), earn:25});
+     }
+   }
+   save();
+ } else {
+   if(btoa(p)!== users[u].pass){ alert("Wrong password!"); return; }
+ }
+ currentUser = u;
+ localStorage.setItem('taskup_current', u);
+ showMain();
+}
+
+function showMain(){
+ if(!currentUser ||!users[currentUser]) return;
+ document.getElementById('loginPage').style.display="none";
+ document.getElementById('mainPage').style.display="block";
+ document.getElementById('userName').innerText = currentUser;
+ document.getElementById('bal').innerText = users[currentUser].balance;
+ document.getElementById('refs').innerText = users[currentUser].refs;
+ document.getElementById('refLink').value = window.location.origin + window.location.pathname + "?ref=" + users[currentUser].id;
+ renderTasks();
+ renderHistory();
+}
+
+function renderTasks(){
+ let html = "";
+ let done = JSON.parse(localStorage.getItem('done_'+currentUser) || "[]");
+ tasks.forEach((t,i)=>{
+   let isDone = done.includes(i);
+   html += `<div class="task-card bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex justify-between items-center">
+     <div class="flex gap-3 items-center"><div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">${t.icon}</div>
+     <div><p class="font-bold text-sm">${t.name}</p><p class="text-[#00FF88] text-xs">+Rs ${t.reward}</p></div></div>
+     <button onclick="doTask(${i})" ${isDone?'disabled':''} class="${isDone?'bg-white/10 text-white/30':'gradient-btn'} px-5 py-2.5 rounded-xl text-xs font-bold">${isDone?'Done ✓':'Claim'}</button>
+   </div>`;
+ });
+ document.getElementById('tasksList').innerHTML = html;
+}
+
+function doTask(i){
+ let done = JSON.parse(localStorage.getItem('done_'+currentUser) || "[]");
+ if(done.includes(i)) return;
+ if(tasks[i].link) window.open(tasks[i].link, '_blank');
+ users[currentUser].balance += tasks[i].reward;
+ done.push(i);
+ localStorage.setItem('done_'+currentUser, JSON.stringify(done));
+ save();
+ document.getElementById('bal').innerText = users[currentUser].balance;
+ renderTasks();
+}
+
+function withdraw(){
+ let amt = parseInt(document.getElementById('amount').value);
+ let acc = document.getElementById('accNum').value.trim();
+ if(users[currentUser].balance < 500){ alert("Min Rs 500 required!"); return; }
+ if(!amt || amt < 500 || amt > users[currentUser].balance){ alert("Invalid Amount!"); return; }
+ if(!acc){ alert("Account number likho"); return; }
+ users[currentUser].balance -= amt; save();
+ document.getElementById('bal').innerText = users[currentUser].balance;
+ let w = JSON.parse(localStorage.getItem('withdraws') || "[]");
+ let myW = JSON.parse(localStorage.getItem('my_withdraws_'+currentUser) || "[]");
+ let obj = {id:Date.now(), user:currentUser, amount:amt, account:acc, date:new Date().toLocaleString(), status:"Pending"};
+ w.push(obj);
+ myW.push(obj);
+ localStorage.setItem('withdraws', JSON.stringify(w));
+ localStorage.setItem('my_withdraws_'+currentUser, JSON.stringify(myW));
+ document.getElementById('wMsg').innerHTML = `<span class="text-[#00FF88] bg-[#00FF88]/10 px-3 py-2 rounded-xl block">✅ Request Sent: Rs ${amt}</span>`;
+ renderHistory();
+}
+
+function renderHistory(){
+ let myW = JSON.parse(localStorage.getItem('my_withdraws_'+currentUser) || "[]");
+ let el = document.getElementById('historyList');
+ if(myW.length==0){ el.innerHTML = `<p class="text-white/30 text-center py-4 text-sm">No withdrawal yet</p>`; return; }
+ el.innerHTML = myW.slice().reverse().map(w=>{
+   let color = w.status=="Pending"? "bg-yellow-500/20 text-yellow-400" : w.status=="Paid"? "bg-[#00FF88]/20 text-[#00FF88]" : "bg-red-500/20 text-red-400";
+   return `<div class="bg-white/5 border border-white/5 rounded-xl p-3 flex justify-between items-center">
+     <div><p class="font-bold text-sm">Rs ${w.amount}</p><p class="text-white/40 text-[11px]">${w.date} • ${w.account}</p></div>
+     <span class="${color} px-3 py-1 rounded-full text-[10px] font-bold">${w.status}</span>
+   </div>`;
+ }).join('');
+}
+
+function openTeam(){
+ let user = users[currentUser];
+ let team = user.myTeam || [];
+ document.getElementById('teamModal').classList.add('active');
+ document.getElementById('teamCount').innerText = team.length;
+ document.getElementById('refEarn').innerText = "Rs "+(team.length*25);
+ let totalTeamBal = 0;
+ team.forEach(m=>{ if(users[m.name]) totalTeamBal += users[m.name].balance; });
+ document.getElementById('teamEarn').innerText = "Rs "+totalTeamBal;
+ let listEl = document.getElementById('teamList');
+ if(team.length==0){ listEl.innerHTML = `<p class="text-white/30 text-center py-8 text-sm">No referrals yet.<br>Share your link!</p>`; return; }
+ listEl.innerHTML = team.map(m=>{
+   let bal = users[m.name]?.balance || 0;
+   return `<div class="bg-white/5 rounded-xl p-3 flex justify-between items-center"><div><p class="font-bold text-sm">${m.name}</p><p class="text-white/40 text-[11px]">Joined: ${m.date}</p></div><div class="text-right"><p class="text-[#00FF88] text-xs font-bold">Rs ${bal}</p><p class="text-white/30 text-[10px]">Their Balance</p></div></div>`;
+ }).join('');
+}
+function closeTeam(e){ if(e.target.id=="teamModal") document.getElementById('teamModal').classList.remove('active'); }
+function copyRef(){ navigator.clipboard.writeText(document.getElementById('refLink').value); alert("Copied!"); }
+function shareWA(){ let link = document.getElementById('refLink').value; window.open(`https://wa.me/?text=🔥 TaskUp Pro se kamao: ${encodeURIComponent(link)}`, '_blank'); }
+function logout(){ localStorage.removeItem('taskup_current'); location.reload(); }
+if(currentUser && users[currentUser]) showMain();
+</script>
+</body>
+</html>
