@@ -2,246 +2,71 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin Panel - TaskUp PRO</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Admin ULTRA Responsive</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-*{font-family:'Plus Jakarta Sans',sans-serif}
-body{background:#080a12; color:white}
-.glass{background:rgba(255,255,255,0.06); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1)}
-.gradient-text{background:linear-gradient(90deg,#00D2FF,#928DFF,#FF3BD4); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
-.gradient-btn{background:linear-gradient(90deg,#00D2FF,#7A5CFF); box-shadow:0 0 20px rgba(122,92,255,0.4)}
-.blur-ball{position:absolute; width:500px; height:500px; filter:blur(120px); border-radius:50%; z-index:-1; opacity:0.4}
-table{width:100%; border-collapse:separate; border-spacing:0 8px}
-th{color:rgba(255,255,255,0.4); font-size:11px; text-transform:uppercase; letter-spacing:1px; padding:10px}
-td{background:rgba(255,255,255,0.04); padding:14px 10px; font-size:13px}
-tr td:first-child{border-radius:12px 0 0 12px}
-tr td:last-child{border-radius:0 12px 12px 0}
+*{box-sizing:border-box}
+html{font-size:clamp(14px,2.5vw,16px)}
+body{background:#07080F;color:white;overflow-x:hidden}
+.glass{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.12)}
+.gradient-btn{background:linear-gradient(135deg,#00D2FF,#7A5CFF,#FF3BD4)}
+.blur-ball{position:fixed;width:clamp(300px,60vw,600px);height:clamp(300px,60vw,600px);filter:blur(120px);border-radius:50%;z-index:-1;opacity:0.4}
+.container-admin{width:100%;max-width:1250px;margin:0 auto;padding:clamp(12px,3vw,24px)}
+.card-responsive{padding:clamp(16px,4vw,24px);border-radius:clamp(18px,4vw,24px)}
+@media (max-width:640px){.stack-mobile{flex-direction:column!important;align-items:stretch!important}.full-mobile{width:100%!important}}
 </style>
 </head>
-<body class="p-4 md:p-6 max-w-[1200px] mx-auto relative">
+<body class="relative">
+<div class="blur-ball bg-[#7A5CFF] top-[-10%] left-[-10%]"></div>
+<div class="blur-ball bg-[#00D2FF] bottom-[0%] right-[-10%]"></div>
 
-<div class="blur-ball bg-[#7A5CFF] top-[-100px] left-[-100px]"></div>
-<div class="blur-ball bg-[#00D2FF] bottom-[0px] right-[-100px]"></div>
+<div id="lock" class="min-h-[100dvh] flex items-center justify-center p-4"><div class="glass rounded-[32px] p-[clamp(20px,6vw,36px)] w-full max-w-[400px] text-center"><div class="w-16 h-16 gradient-btn rounded-[16px] flex items-center justify-center mx-auto text-2xl">🔐</div><h2 class="text-[clamp(20px,6vw,26px)] font-bold mt-4">Admin ULTRA</h2><p class="text-white/40 text-xs mt-1">Responsive • All Screens</p><input id="pass" type="password" placeholder="Password" class="w-full mt-6 bg-white/[0.06] border border-white/10 rounded-xl px-5 py-4 outline-none text-[16px]"><button onclick="login()" class="gradient-btn w-full rounded-xl py-4 font-bold mt-4">Unlock →</button></div></div>
 
-<!-- LOGIN -->
-<div id="lock" class="min-h-[90vh] flex items-center justify-center">
-  <div class="glass rounded-[28px] p-8 w-full max-w-[380px] text-center">
-    <div class="w-16 h-16 gradient-btn rounded-2xl flex items-center justify-center mx-auto text-3xl">🔐</div>
-    <h2 class="text-2xl font-extrabold mt-4">Admin <span class="gradient-text">PRO</span></h2>
-    <p class="text-white/40 text-xs mt-1">TaskUp Management System</p>
-    <input id="pass" type="password" placeholder="Enter Admin Password" class="w-full mt-6 bg-white/5 border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-[#7A5CFF]">
-    <button onclick="login()" class="gradient-btn w-full rounded-xl py-4 font-bold mt-3">Unlock Panel →</button>
+<div id="panel" style="display:none" class="space-y-4 container-admin pb-20">
+  <div class="flex flex-col sm:flex-row justify-between gap-3 sm:items-center"><h1 class="text-[clamp(20px,5vw,28px)] font-bold">Dashboard <span class="text-white/30 text-sm font-normal">Live</span></h1><button onclick="loadAll();loadPromos()" class="bg-white/10 border border-white/10 px-5 py-2.5 rounded-full text-xs font-bold">🔄 Refresh</button></div>
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div class="glass card-responsive"><p class="text-white/40 text-[10px] uppercase tracking-widest">Users</p><h2 class="text-[clamp(22px,6vw,30px)] font-bold mt-1" id="totalUsers">0</h2><p class="text-[#00FF88] text-[11px] mt-1">Global</p></div>
+    <div class="glass card-responsive"><p class="text-white/40 text-[10px] uppercase">Pending</p><h2 class="text-[clamp(22px,6vw,30px)] font-bold mt-1" id="totalW">0</h2><p class="text-yellow-400 text-[11px] mt-1">Action</p></div>
+    <div class="glass card-responsive"><p class="text-white/40 text-[10px] uppercase">Total Paid</p><h2 class="text-[clamp(18px,5vw,24px)] font-bold mt-1">Rs <span id="totalPaid">0</span></h2><p class="text-white/30 text-[11px] mt-1">Lifetime</p></div>
+    <div class="glass card-responsive flex flex-col justify-center gap-2"><button onclick="exportData()" class="bg-white text-black rounded-xl py-3 font-bold text-xs">📥 Export</button><p class="text-[10px] text-white/30 text-center">Auto 12s</p></div>
   </div>
-</div>
 
-<!-- PANEL -->
-<div id="panel" style="display:none" class="space-y-4 pb-20">
-
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <div class="glass rounded-[22px] p-5"><p class="text-white/40 text-[11px] uppercase">Total Users</p><h2 class="text-3xl font-extrabold mt-2" id="totalUsers">0</h2><p class="text-[#00FF88] text-[11px] mt-1">● Live</p></div>
-    <div class="glass rounded-[22px] p-5"><p class="text-white/40 text-[11px] uppercase">Pending Withdraw</p><h2 class="text-3xl font-extrabold mt-2" id="totalW">0</h2><p class="text-yellow-400 text-[11px] mt-1">● Needs Action</p></div>
-    <div class="glass rounded-[22px] p-5"><p class="text-white/40 text-[11px] uppercase">Total Paid</p><h2 class="text-3xl font-extrabold mt-2">Rs <span id="totalPaid">0</span></h2><p class="text-white/30 text-[11px] mt-1">This month</p></div>
-    <div class="glass rounded-[22px] p-5 flex flex-col justify-center gap-2">
-      <button onclick="exportData()" class="bg-white text-black rounded-xl py-2.5 font-bold text-xs">📥 Export Data</button>
-      <button onclick="clearAll()" class="bg-[#FF3B30]/20 text-[#FF3B30] border border-[#FF3B30]/30 rounded-xl py-2.5 font-bold text-xs">🗑️ Delete All</button>
+  <div class="glass card-responsive border border-[#FF3BD4]/30">
+    <h3 class="font-bold text-[clamp(14px,4vw,16px)]">🎁 Promo Studio</h3><p class="text-white/40 text-xs mt-1">Responsive • All phones</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
+      <input id="promoCode" placeholder="CODE" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-[14px] uppercase outline-none">
+      <input id="promoReward" type="number" placeholder="Reward Rs" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-[14px] outline-none">
+      <input id="promoMax" type="number" placeholder="Max Uses" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-[14px] outline-none">
+      <button onclick="createPromo()" class="bg-[#FF3BD4] rounded-xl py-3.5 font-bold text-sm">+ Create</button>
     </div>
+    <div id="promoList" class="mt-6 space-y-2.5"></div>
   </div>
 
-  <!-- USERS -->
-  <div class="glass rounded-[28px] p-6">
-    <div class="flex flex-col md:flex-row justify-between md:items-center gap-3">
-      <h3 class="font-bold text-lg">👥 All Users</h3>
-      <input id="searchUser" onkeyup="loadData()" placeholder="Search username..." class="bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-xs outline-none w-full md:w-[250px]">
-    </div>
-    <div class="overflow-auto mt-3"><table id="usersTable"></table></div>
-    <div class="bg-black/30 rounded-2xl p-4 mt-6 border border-white/5">
-      <h4 class="font-bold text-sm mb-3">⚡ Quick Balance Editor</h4>
-      <div class="flex flex-col md:flex-row gap-2">
-        <input id="addUser" placeholder="Username" class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none">
-        <input id="addBal" type="number" placeholder="+100 / -50" class="w-full md:w-[130px] bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none">
-        <button onclick="addBalance()" class="gradient-btn px-6 py-3 rounded-xl font-bold text-sm">Update</button>
-      </div>
-    </div>
-  </div>
+  <div class="glass card-responsive"><div class="flex flex-col sm:flex-row justify-between gap-3"><h3 class="font-bold text-[clamp(14px,4vw,16px)]">👥 All Users - Global</h3><input id="searchUser" onkeyup="renderUsers()" placeholder="Search..." class="bg-white/[0.06] border border-white/10 rounded-full px-5 py-2.5 text-xs outline-none w-full sm:w-[280px] text-[14px]"></div><div id="usersTable" class="mt-5 space-y-2.5"></div></div>
 
-  <!-- WITHDRAW - UPDATED WITH APPROVE + REMOVE -->
-  <div class="glass rounded-[28px] p-6 border border-yellow-500/20">
-    <h3 class="font-bold text-lg">💸 Withdraw Requests - Action Required</h3>
-    <p class="text-white/40 text-xs mt-1">Approve = Paid | Remove = Reject & Refund to user</p>
-    <div class="overflow-auto mt-4"><table id="wTable"></table></div>
-  </div>
-
-  <!-- PAID HISTORY -->
-  <div class="glass rounded-[28px] p-6">
-    <h3 class="font-bold text-lg">✅ Paid History</h3>
-    <div class="overflow-auto mt-3"><table id="paidTable"></table></div>
-  </div>
+  <div class="glass card-responsive border border-yellow-500/20"><h3 class="font-bold text-[clamp(14px,4vw,16px)]">💸 Withdraw Requests</h3><div id="wTable" class="mt-5 space-y-3"></div></div>
 </div>
 
 <script>
-const ADMIN_PASS = "Husnain123a786";
-function login(){
- if(document.getElementById('pass').value === ADMIN_PASS){
-   document.getElementById('lock').style.display='none';
-   document.getElementById('panel').style.display='block';
-   loadData();
- } else alert("Wrong Password!");
-}
-
-function loadData(){
- let users = JSON.parse(localStorage.getItem('taskup_users') || "{}");
- let withdraws = JSON.parse(localStorage.getItem('withdraws') || "[]");
- let paidHistory = JSON.parse(localStorage.getItem('paid_history') || "[]");
- let search = (document.getElementById('searchUser')?.value || "").toLowerCase();
-
- document.getElementById('totalUsers').innerText = Object.keys(users).length;
- document.getElementById('totalW').innerText = withdraws.length;
- document.getElementById('totalPaid').innerText = localStorage.getItem('total_paid') || "0";
-
- // USERS TABLE
- let ut = document.getElementById('usersTable');
- ut.innerHTML = "<tr><th>User</th><th>ID</th><th>Balance</th><th>Refs</th><th>Team</th><th>Action</th></tr>";
- for(let u in users){
-   if(search &&!u.toLowerCase().includes(search)) continue;
-   let teamCount = users[u].myTeam? users[u].myTeam.length : 0;
-   ut.innerHTML += `<tr>
-     <td><b>${u}</b></td>
-     <td><span class="bg-white/10 px-2 py-1 rounded-full text-[10px]">${users[u].id}</span></td>
-     <td class="text-[#00FF88] font-bold">Rs ${users[u].balance}</td>
-     <td>${users[u].refs}</td>
-     <td>${teamCount} users</td>
-     <td><button onclick="deleteUser('${u}')" class="bg-[#FF3B30]/20 text-[#FF3B30] border border-[#FF3B30]/20 px-3 py-1.5 rounded-full text-[11px]">Delete</button></td>
-   </tr>`;
- }
-
- // WITHDRAW TABLE - WITH APPROVE + REMOVE
- let wt = document.getElementById('wTable');
- if(withdraws.length==0){
-   wt.innerHTML = "<tr><td colspan='5' class='text-center py-8 text-white/30!bg-transparent'>No pending requests ✅</td></tr>";
- } else {
-   wt.innerHTML = "<tr><th>User</th><th>Amount</th><th>Account</th><th>Date</th><th>Actions</th></tr>";
-   withdraws.forEach((w,i)=>{
-     wt.innerHTML += `<tr>
-       <td><b>${w.user}</b></td>
-       <td class="font-bold">Rs ${w.amount}</td>
-       <td><span class="bg-white/10 px-2 py-1 rounded-full text-[11px]">${w.account}</span></td>
-       <td class="text-white/40 text-[11px]">${w.date}</td>
-       <td>
-         <div class="flex gap-1.5">
-           <button onclick="approveW(${i})" class="bg-[#00FF88]/20 text-[#00FF88] border border-[#00FF88]/30 px-3 py-1.5 rounded-full text-[11px] font-bold">✓ Approve</button>
-           <button onclick="rejectW(${i})" class="bg-[#FF3B30]/20 text-[#FF3B30] border border-[#FF3B30]/30 px-3 py-1.5 rounded-full text-[11px] font-bold">✕ Reject</button>
-         </div>
-       </td>
-     </tr>`;
-   });
- }
-
- // PAID HISTORY TABLE
- let pt = document.getElementById('paidTable');
- if(paidHistory.length==0){
-   pt.innerHTML = "<tr><td colspan='4' class='text-center py-6 text-white/30!bg-transparent'>No paid history yet</td></tr>";
- } else {
-   pt.innerHTML = "<tr><th>User</th><th>Amount</th><th>Account</th><th>Date Paid</th></tr>";
-   paidHistory.slice().reverse().slice(0,20).forEach(h=>{
-     pt.innerHTML += `<tr><td>${h.user}</td><td class="text-[#00FF88]">Rs ${h.amount}</td><td>${h.account}</td><td class="text-white/40 text-[11px]">${h.paidDate}</td></tr>`;
-   });
- }
-}
-
-function addBalance(){
- let u = document.getElementById('addUser').value.trim();
- let amt = parseInt(document.getElementById('addBal').value);
- let users = JSON.parse(localStorage.getItem('taskup_users') || "{}");
- if(!users[u]){ alert("User not found: "+u); return; }
- if(isNaN(amt)){ alert("Amount likho"); return; }
- users[u].balance += amt;
- localStorage.setItem('taskup_users', JSON.stringify(users));
- alert("Updated! New Balance: Rs "+users[u].balance);
- loadData();
-}
-
-function deleteUser(u){
- if(confirm("Delete user "+u+"? This cannot be undone!")){
-  let users = JSON.parse(localStorage.getItem('taskup_users') || "{}");
-  delete users[u];
-  localStorage.setItem('taskup_users', JSON.stringify(users));
-  loadData();
- }
-}
-
-// APPROVE FUNCTION
-function approveW(i){
- let withdraws = JSON.parse(localStorage.getItem('withdraws') || "[]");
- let req = withdraws[i];
- if(!confirm(`Approve Rs ${req.amount} to ${req.user} (${req.account})?`)) return;
-
- // Update user's personal history to PAID
- let myW = JSON.parse(localStorage.getItem('my_withdraws_'+req.user) || "[]");
- myW.forEach(m=>{ if(m.id==req.id) m.status="Paid"; });
- localStorage.setItem('my_withdraws_'+req.user, JSON.stringify(myW));
-
- // Add to paid history and total paid
- let paidHistory = JSON.parse(localStorage.getItem('paid_history') || "[]");
- paidHistory.push({...req, paidDate: new Date().toLocaleString(), status:"Paid"});
- localStorage.setItem('paid_history', JSON.stringify(paidHistory));
-
- let total = parseInt(localStorage.getItem('total_paid') || "0") + req.amount;
- localStorage.setItem('total_paid', total);
-
- // Remove from pending
- withdraws.splice(i,1);
- localStorage.setItem('withdraws', JSON.stringify(withdraws));
- loadData();
- alert("✅ Approved & Marked as Paid!");
-}
-
-// REMOVE / REJECT FUNCTION - REFUND BALANCE
-function rejectW(i){
- let withdraws = JSON.parse(localStorage.getItem('withdraws') || "[]");
- let req = withdraws[i];
- if(!confirm(`Reject Rs ${req.amount} request of ${req.user}? Amount will be refunded to user!`)) return;
-
- let users = JSON.parse(localStorage.getItem('taskup_users') || "{}");
- if(users[req.user]){
-   users[req.user].balance += req.amount; // REFUND
-   localStorage.setItem('taskup_users', JSON.stringify(users));
- }
-
- // Update user's personal history to REJECTED
- let myW = JSON.parse(localStorage.getItem('my_withdraws_'+req.user) || "[]");
- myW.forEach(m=>{ if(m.id==req.id) m.status="Rejected"; });
- localStorage.setItem('my_withdraws_'+req.user, JSON.stringify(myW));
-
- withdraws.splice(i,1);
- localStorage.setItem('withdraws', JSON.stringify(withdraws));
- loadData();
- alert("❌ Rejected & Rs "+req.amount+" refunded to "+req.user);
-}
-
-function clearAll(){
- if(confirm("⚠️ Saara data delete ho jayega! Pakka?")){
-  localStorage.removeItem('taskup_users');
-  localStorage.removeItem('withdraws');
-  localStorage.removeItem('paid_history');
-  localStorage.removeItem('total_paid');
-  // Clear all my_withdraws keys
-  Object.keys(localStorage).forEach(k=>{ if(k.startsWith('my_withdraws_') || k.startsWith('done_')) localStorage.removeItem(k); });
-  loadData();
- }
-}
-
-function exportData(){
- let data = {
-   users: JSON.parse(localStorage.getItem('taskup_users') || "{}"),
-   pending: JSON.parse(localStorage.getItem('withdraws') || "[]"),
-   paid: JSON.parse(localStorage.getItem('paid_history') || "[]")
- };
- let blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
- let url = URL.createObjectURL(blob);
- let a = document.createElement('a'); a.href = url; a.download = `TaskUp_Admin_Export_${Date.now()}.json`; a.click();
-}
+const DB_URL="https://taskup13-default-rtdb.firebaseio.com"; const ADMIN_PASS="Husnain123a786"; let allUsersData={};
+async function dbGet(p){let r=await fetch(`${DB_URL}/${p}.json`);return await r.json();}
+async function dbPatch(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PATCH',body:JSON.stringify(d)});}
+async function dbDelete(p){await fetch(`${DB_URL}/${p}.json`,{method:'DELETE'});}
+async function dbSet(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PUT',body:JSON.stringify(d)});}
+function login(){if(document.getElementById('pass').value===ADMIN_PASS){document.getElementById('lock').style.display='none';document.getElementById('panel').style.display='block';loadAll();loadPromos();}else alert("Wrong!");}
+async function loadAll(){let users=await dbGet(`users`);allUsersData=users||{};document.getElementById('totalUsers').innerText=users?Object.keys(users).length:0;renderUsers();let w=await dbGet(`withdraws`);document.getElementById('totalW').innerText=w?Object.keys(w).length:0;let html="";if(!w)html="<p class='text-center py-10 text-white/30'>No pending ✅</p>";else{Object.values(w).reverse().forEach(req=>{html+=`<div class="bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row justify-between gap-3"><div class="min-w-0"><div class="flex flex-wrap items-center gap-2"><b class="text-sm">${req.user}</b><span class="bg-white/10 px-2.5 py-1 rounded-full text-[10px] truncate max-w-[150px]">${req.account}</span></div><div class="flex flex-wrap items-center gap-2 mt-1.5"><span class="text-[#00FF88] font-bold text-sm">Rs ${req.amount}</span><span class="text-white/30 text-[11px]">${req.date}</span></div></div><div class="flex gap-2 shrink-0"><button onclick="approveW('${req.id}')" class="flex-1 sm:flex-none bg-[#00FF88]/15 text-[#00FF88] border border-[#00FF88]/20 px-4 py-2.5 rounded-full text-xs font-bold">✓ Approve</button><button onclick="rejectW('${req.id}')" class="flex-1 sm:flex-none bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/20 px-4 py-2.5 rounded-full text-xs font-bold">✕ Reject</button></div></div>`;});}document.getElementById('wTable').innerHTML=html;let paid=await dbGet(`total_paid`);document.getElementById('totalPaid').innerText=paid||0;}
+function renderUsers(){let search=(document.getElementById('searchUser').value||"").toLowerCase();let html="";if(!allUsersData){document.getElementById('usersTable').innerHTML="<p class='text-center py-8 text-white/30'>No users</p>";return;}for(let u in allUsersData){if(search&&!u.toLowerCase().includes(search))continue;html+=`<div class="bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row justify-between gap-3"><div class="min-w-0"><div class="flex flex-wrap items-center gap-1.5"><b class="text-sm truncate max-w-[100px] sm:max-w-none">${u}</b><span class="bg-white/10 px-2 py-0.5 rounded-full text-[9px]">${allUsersData[u].id}</span><span class="bg-[#00D2FF]/15 text-[#00D2FF] px-2 py-0.5 rounded-full text-[9px]">T:${allUsersData[u].myTeam?allUsersData[u].myTeam.length:0}</span></div><div class="flex items-center gap-2 mt-1"><span class="text-[#00FF88] font-bold text-sm">Rs ${allUsersData[u].balance}</span><span class="text-white/40 text-xs">R:${allUsersData[u].refs}</span></div></div><div class="flex gap-1.5 shrink-0"><button onclick="editBal('${u}')" class="flex-1 sm:flex-none bg-white/[0.08] border border-white/10 px-4 py-2 rounded-full text-xs">+ / -</button><button onclick="deleteUser('${u}')" class="bg-red-500/10 text-red-400 px-4 py-2 rounded-full text-xs">Del</button></div></div>`;}document.getElementById('usersTable').innerHTML=html||"<p class='text-center py-6 text-white/30'>No result</p>";}
+async function createPromo(){let code=document.getElementById('promoCode').value.trim().toUpperCase();let reward=parseInt(document.getElementById('promoReward').value);let maxUses=parseInt(document.getElementById('promoMax').value)||9999;if(!code||!reward)return alert("Code & Reward!");await dbSet(`promoCodes/${code}`,{reward:reward,active:true,maxUses:maxUses,usedCount:0,createdAt:new Date().toLocaleString()});alert(`${code} Created!`);document.getElementById('promoCode').value="";document.getElementById('promoReward').value="";document.getElementById('promoMax').value="";loadPromos();}
+async function loadPromos(){let promos=await dbGet(`promoCodes`);let el=document.getElementById('promoList');if(!promos){el.innerHTML="<p class='text-white/30 text-xs py-2'>No custom codes. Default WELCOME50, EID100 active.</p>";return;}let html="";for(let c in promos){let p=promos[c];html+=`<div class="bg-[#FF3BD4]/[0.07] border border-[#FF3BD4]/20 rounded-2xl p-4 flex flex-col sm:flex-row justify-between gap-3"><div class="min-w-0"><div class="flex flex-wrap items-center gap-2"><b class="text-[#FF3BD4] text-sm">${c}</b><span class="bg-white text-black px-2 py-0.5 rounded-full text-[10px] font-bold">Rs ${p.reward}</span><span class="text-[10px] ${p.active?'text-[#00FF88]':'text-red-400'}">${p.active?'ACTIVE':'OFF'}</span></div><p class="text-[11px] text-white/40 mt-1">Used ${p.usedCount||0}/${p.maxUses}</p></div><div class="flex gap-1.5 shrink-0"><button onclick="togglePromo('${c}')" class="bg-white/10 px-3.5 py-2 rounded-full text-xs">${p.active?'Disable':'Enable'}</button><button onclick="deletePromo('${c}')" class="bg-red-500/10 text-red-400 px-3.5 py-2 rounded-full text-xs">Del</button></div></div>`;}el.innerHTML=html;}
+async function togglePromo(c){let p=await dbGet(`promoCodes/${c}`);await dbPatch(`promoCodes/${c}`,{active:!p.active});loadPromos();}
+async function deletePromo(c){if(confirm(`Delete ${c}?`)){await dbDelete(`promoCodes/${c}`);loadPromos();}}
+async function editBal(u){let amt=prompt(`Add/Cut for ${u}:`);if(!amt)return;amt=parseInt(amt);await dbPatch(`users/${u}`,{balance:allUsersData[u].balance+amt});loadAll();}
+async function deleteUser(u){if(confirm(`Delete ${u}?`)){await dbDelete(`users/${u}`);loadAll();}}
+async function approveW(id){let req=await dbGet(`withdraws/${id}`);if(!req)return;await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Paid"});await dbDelete(`withdraws/${id}`);let total=await dbGet(`total_paid`)||0;await dbSet(`total_paid`,total+req.amount);loadAll();}
+async function rejectW(id){let req=await dbGet(`withdraws/${id}`);if(!req)return;let user=await dbGet(`users/${req.user}`);if(user)await dbPatch(`users/${req.user}`,{balance:user.balance+req.amount});await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Rejected"});await dbDelete(`withdraws/${id}`);loadAll();}
+function exportData(){let blob=new Blob([JSON.stringify(allUsersData,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Export_${Date.now()}.json`;a.click();}
 </script>
 </body>
 </html>

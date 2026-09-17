@@ -2,252 +2,106 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TaskUp Pro - Earn Money Daily</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>TaskUp Ultra - Responsive</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-*{font-family:'Plus Jakarta Sans',sans-serif}
-body{background:#080a12; color:white; overflow-x:hidden}
-.glass{background:rgba(255,255,255,0.06); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1)}
-.gradient-text{background:linear-gradient(90deg,#00D2FF,#928DFF,#FF3BD4); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
-.gradient-btn{background:linear-gradient(90deg,#00D2FF,#7A5CFF); transition:0.3s; box-shadow:0 0 20px rgba(122,92,255,0.4)}
-.gradient-btn:hover{transform:translateY(-2px); box-shadow:0 0 30px rgba(122,92,255,0.6)}
+*{font-family:'Plus Jakarta Sans',sans-serif;box-sizing:border-box}
+html{font-size:clamp(14px, 3.8vw, 16px)}
+body{background:#07080F;color:white;overflow-x:hidden;min-height:100vh;min-height:100dvh}
+h1,h2{font-family:'Space Grotesk',sans-serif}
+.glass{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.12);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.gradient-btn{background:linear-gradient(135deg,#00D2FF 0%,#7A5CFF 50%,#FF3BD4 100%);box-shadow:0 0 25px rgba(122,92,255,0.5);transition:0.3s}
+.gradient-btn:active{transform:scale(0.98)}
+.gradient-text{background:linear-gradient(90deg,#00D2FF,#928DFF,#FF3BD4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .task-card{transition:0.3s}
-.task-card:hover{transform:translateY(-3px); border-color:rgba(122,92,255,0.5)}
-.blur-ball{position:absolute; width:400px; height:400px; filter:blur(100px); border-radius:50%; z-index:-1; opacity:0.5}
-.modal{position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); z-index:50; display:none; align-items:center; justify-content:center; padding:20px}
+.blur-ball{position:fixed;width:clamp(300px,80vw,500px);height:clamp(300px,80vw,500px);filter:blur(clamp(80px,20vw,130px));border-radius:50%;z-index:-1;opacity:0.6}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(15px);z-index:99;display:none;align-items:center;justify-content:center;padding:clamp(12px,4vw,20px)}
 .modal.active{display:flex}
+.container-fluid{width:100%;max-width:480px;margin:0 auto;padding:clamp(12px,4vw,24px);padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+.balance-text{font-size:clamp(36px,12vw,52px)!important;line-height:0.9}
+.card-padding{padding:clamp(18px,5vw,26px)}
+@media (min-width:768px){.container-fluid{max-width:520px} html{font-size:16px}}
+@media (min-width:1024px){.container-fluid{max-width:560px}}
+@media (max-height:700px){#loginPage{min-height:auto!important;padding:20px 0}}
 </style>
 </head>
-<body class="p-4 md:p-6 max-w-[480px] mx-auto relative">
+<body class="relative">
+<div class="blur-ball bg-[#7A5CFF] top-[-10%] left-[-20%]"></div>
+<div class="blur-ball bg-[#00D2FF] top-[40%] right-[-20%]"></div>
+<div class="blur-ball bg-[#FF3BD4] bottom-[0%] left-[10%] opacity-30"></div>
 
-<div class="blur-ball bg-[#7A5CFF] top-[-100px] left-[-100px]"></div>
-<div class="blur-ball bg-[#00D2FF] top-[200px] right-[-150px]"></div>
-
-<!-- LOGIN PAGE -->
-<div id="loginPage" class="min-h-[90vh] flex flex-col justify-center">
-  <div class="glass rounded-[28px] p-7 text-center">
-    <div class="w-16 h-16 gradient-btn rounded-2xl flex items-center justify-center mx-auto text-3xl">💎</div>
-    <h1 class="text-[32px] font-extrabold mt-4">TaskUp <span class="gradient-text">PRO</span></h1>
-    <p class="text-white/60 text-[14px] mt-1">Earn Rs.25 / Refer + Daily Tasks</p>
+<div id="loginPage" class="min-h-[100dvh] flex flex-col justify-center container-fluid">
+  <div class="glass rounded-[clamp(24px,6vw,32px)] card-padding text-center relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+    <div class="w-[clamp(60px,18vw,80px)] h-[clamp(60px,18vw,80px)] gradient-btn rounded-[20px] flex items-center justify-center mx-auto text-[clamp(28px,8vw,36px)]">💎</div>
+    <h1 class="text-[clamp(28px,8vw,36px)] font-[800] mt-5 tracking-tight">TaskUp <span class="gradient-text">ULTRA</span></h1>
+    <p class="text-white/50 text-[clamp(11px,3vw,13px)] mt-1 tracking-wide">EARN • REFER • REDEEM • WITHDRAW</p>
+    <div class="grid grid-cols-3 gap-2 mt-6 text-[clamp(10px,2.8vw,11px)]">
+      <div class="bg-white/5 rounded-xl py-2.5"><p class="text-white/40">BONUS</p><p class="font-bold text-[#00FF88] text-[13px]">Rs 50</p></div>
+      <div class="bg-white/5 rounded-xl py-2.5"><p class="text-white/40">PER REFER</p><p class="font-bold text-[#00D2FF] text-[13px]">Rs 25</p></div>
+      <div class="bg-white/5 rounded-xl py-2.5"><p class="text-white/40">PAYOUT</p><p class="font-bold text-[13px]">Fast</p></div>
+    </div>
     <div class="mt-8 space-y-3">
-      <input id="username" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-[#7A5CFF]" placeholder="Username">
-      <input id="password" type="password" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-[#7A5CFF]" placeholder="Password">
-      <button onclick="register()" class="gradient-btn w-full rounded-2xl py-4 font-bold text-[16px]">Continue → Create Account</button>
-      <p id="refMsg" class="text-[#00FF88] text-sm bg-[#00FF88]/10 py-2 rounded-xl hidden"></p>
+      <input id="username" class="w-full bg-white/[0.06] border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-[#7A5CFF] text-[16px]" placeholder="Username">
+      <input id="password" type="password" class="w-full bg-white/[0.06] border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-[#7A5CFF] text-[16px]" placeholder="Password">
+      <button onclick="register()" id="regBtn" class="gradient-btn w-full rounded-2xl py-4 font-bold text-[clamp(14px,4vw,16px)] tracking-wide">Continue →</button>
+      <p id="refMsg" class="text-[#00FF88] text-sm bg-[#00FF88]/10 border border-[#00FF88]/20 py-3 rounded-xl hidden"></p>
     </div>
   </div>
 </div>
 
-<!-- MAIN PAGE -->
-<div id="mainPage" style="display:none" class="space-y-4 pb-10">
-  <div class="glass rounded-[28px] p-6">
-    <div class="flex justify-between items-start">
-      <div>
-        <p class="text-white/50 text-[11px] tracking-widest uppercase">Welcome back</p>
-        <h2 class="text-xl font-bold"><span id="userName"></span> 👋</h2>
-      </div>
-      <button onclick="logout()" class="bg-white/10 px-4 py-2 rounded-full text-xs">Logout</button>
-    </div>
-    <div class="mt-6">
-      <p class="text-white/50 text-[12px]">TOTAL BALANCE</p>
-      <h1 class="text-[42px] font-[800] leading-none">Rs <span id="bal">0</span></h1>
-      <div class="flex gap-2 mt-3">
-        <span class="bg-white/10 px-3 py-1.5 rounded-full text-[11px]">👥 <span id="refs">0</span> Referrals</span>
-        <span class="bg-[#00FF88]/15 text-[#00FF88] px-3 py-1.5 rounded-full text-[11px]">✓ Min Withdraw Rs 500</span>
-      </div>
+<div id="mainPage" style="display:none" class="space-y-4 container-fluid">
+  <div class="glass rounded-[28px] card-padding relative overflow-hidden">
+    <div class="flex justify-between items-start gap-3"><div class="min-w-0"><p class="text-white/40 text-[10px] tracking-[0.2em] uppercase">Welcome Back</p><h2 class="text-[clamp(18px,5vw,22px)] font-bold mt-1 truncate"><span id="userName"></span> 👋</h2></div><button onclick="logout()" class="bg-white/5 border border-white/10 px-4 py-2 rounded-full text-[11px] shrink-0">Logout</button></div>
+    <div class="mt-6"><p class="text-white/40 text-[10px] tracking-widest uppercase">Total Balance</p><h1 class="balance-text font-[800] mt-2 tracking-tight">Rs <span id="bal" class="gradient-text">0</span></h1>
+      <div class="flex flex-wrap gap-2 mt-4"><span class="bg-white/[0.08] border border-white/10 px-3.5 py-2 rounded-full text-[11px] flex items-center gap-1.5"><span class="w-2 h-2 bg-[#00FF88] rounded-full animate-pulse"></span> <span id="refs">0</span> Referrals</span><span class="bg-[#00FF88]/10 border border-[#00FF88]/20 text-[#00FF88] px-3.5 py-2 rounded-full text-[11px]">Min Rs 500</span></div>
     </div>
   </div>
 
-  <!-- REFERRAL CARD WITH TEAM BUTTON -->
-  <div class="glass rounded-[28px] p-6">
-    <div class="flex justify-between items-center">
-      <h3 class="font-bold">👥 Referral Program</h3>
-      <span class="text-[11px] bg-[#00D2FF]/20 text-[#00D2FF] px-2.5 py-1 rounded-full">Rs 25 / Refer</span>
-    </div>
-    <div class="flex gap-2 mt-4">
-      <input id="refLink" readonly class="flex-1 bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-xs text-white/70">
-      <button onclick="copyRef()" class="bg-white text-black px-6 rounded-xl font-bold text-sm">Copy</button>
-    </div>
-    <div class="grid grid-cols-2 gap-2 mt-3">
-      <button onclick="shareWA()" class="bg-[#25D366] rounded-xl py-3 font-bold text-sm">WhatsApp Share 🚀</button>
-      <button onclick="openTeam()" class="bg-white/10 border border-white/10 rounded-xl py-3 font-bold text-sm">👀 My Team Progress</button>
-    </div>
+  <div class="glass rounded-[28px] card-padding border border-[#FF3BD4]/30">
+    <div class="flex justify-between items-center gap-2"><h3 class="font-bold text-[clamp(13px,4vw,15px)] flex items-center gap-2">🎁 Promo <span class="bg-[#FF3BD4] text-white text-[8px] px-2 py-0.5 rounded-full">HOT</span></h3><span class="text-[10px] text-white/30 shrink-0">Instant</span></div>
+    <div class="flex gap-2 mt-4"><input id="promoInput" placeholder="WELCOME50" class="flex-1 min-w-0 bg-black/40 border border-white/10 rounded-xl px-3 sm:px-4 py-4 text-[14px] outline-none focus:border-[#FF3BD4] uppercase"><button onclick="redeemPromo()" id="promoBtn" class="bg-white text-black px-5 sm:px-7 rounded-xl font-bold text-sm shrink-0">Redeem</button></div>
+    <p id="promoMsg" class="text-center text-xs mt-3 hidden"></p>
   </div>
 
-  <!-- TASKS -->
-  <div class="glass rounded-[28px] p-6">
-    <h3 class="font-bold mb-4">🔥 Daily Tasks</h3>
-    <div id="tasksList" class="space-y-3"></div>
+  <div class="glass rounded-[28px] card-padding">
+    <div class="flex justify-between items-center gap-2"><h3 class="font-bold text-[clamp(13px,4vw,15px)]">👥 Referral</h3><span class="text-[9px] sm:text-[10px] bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/20 px-2 sm:px-3 py-1 rounded-full shrink-0">Rs 25 / Refer</span></div>
+    <div class="flex gap-2 mt-4"><input id="refLink" readonly class="flex-1 min-w-0 bg-black/50 border border-white/10 rounded-xl px-3 sm:px-4 py-3.5 text-[10px] sm:text-[11px] text-white/60 truncate"><button onclick="copyRef()" class="bg-white text-black px-5 sm:px-6 rounded-xl font-bold text-sm shrink-0">Copy</button></div>
+    <div class="grid grid-cols-2 gap-2.5 mt-4"><button onclick="shareWA()" class="bg-[#25D366] rounded-xl py-3.5 font-bold text-[clamp(12px,3.5vw,14px)]">📱 WhatsApp</button><button onclick="openTeam()" class="bg-white/[0.07] border border-white/10 rounded-xl py-3.5 font-bold text-[clamp(12px,3.5vw,14px)]">👀 Team</button></div>
   </div>
 
-  <!-- WITHDRAW -->
-  <div class="glass rounded-[28px] p-6">
-    <h3 class="font-bold">💸 Withdraw</h3>
-    <input id="accNum" placeholder="03xxxxxxxx - Easypaisa / JazzCash" class="w-full mt-4 bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 outline-none">
-    <input id="amount" type="number" placeholder="Amount (Min 500)" class="w-full mt-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 outline-none">
-    <button onclick="withdraw()" class="w-full mt-4 bg-white text-black rounded-xl py-4 font-extrabold">Request Withdraw</button>
-    <p id="wMsg" class="text-center text-sm mt-3"></p>
-  </div>
+  <div class="glass rounded-[28px] card-padding"><div class="flex justify-between items-center gap-2 mb-4"><h3 class="font-bold text-[clamp(13px,4vw,15px)]">🔥 Daily Tasks</h3><span class="text-[9px] sm:text-[10px] bg-yellow-500/15 text-yellow-400 border border-yellow-500/20 px-2 sm:px-3 py-1 rounded-full shrink-0">24H Reset</span></div><div id="tasksList" class="space-y-3"></div></div>
 
-  <!-- WITHDRAWAL HISTORY - NEW -->
-  <div class="glass rounded-[28px] p-6">
-    <h3 class="font-bold">📜 Withdrawal History</h3>
-    <div id="historyList" class="mt-4 space-y-2"></div>
-  </div>
+  <div class="glass rounded-[28px] card-padding"><h3 class="font-bold text-[15px]">💸 Withdraw</h3><p class="text-white/30 text-[11px] mt-1">Easypaisa / JazzCash • 24H</p><input id="accNum" placeholder="03xxxxxxxx" class="w-full mt-5 bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4 outline-none text-[16px]"><input id="amount" type="number" placeholder="Min 500" class="w-full mt-3 bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4 outline-none text-[16px]"><button onclick="withdraw()" class="w-full mt-5 bg-white text-black rounded-xl py-4 font-[800]">Request Withdraw →</button><p id="wMsg" class="text-center text-sm mt-4"></p></div>
+
+  <div class="glass rounded-[28px] card-padding"><h3 class="font-bold text-[15px]">📜 History</h3><div id="historyList" class="mt-5 space-y-2.5"></div></div>
 </div>
 
-<!-- TEAM MODAL - NEW -->
-<div id="teamModal" class="modal" onclick="closeTeam(event)">
-  <div class="glass rounded-[28px] p-6 w-full max-w-[400px] max-h-[80vh] overflow-auto" onclick="event.stopPropagation()">
-    <div class="flex justify-between items-center">
-      <h3 class="font-bold text-lg">👥 My Team Progress</h3>
-      <button onclick="document.getElementById('teamModal').classList.remove('active')" class="bg-white/10 w-8 h-8 rounded-full">✕</button>
-    </div>
-    <div class="grid grid-cols-3 gap-2 mt-4">
-      <div class="bg-white/5 rounded-2xl p-3 text-center"><p class="text-white/40 text-[10px]">TOTAL TEAM</p><h2 id="teamCount" class="text-xl font-bold">0</h2></div>
-      <div class="bg-[#00D2FF]/10 rounded-2xl p-3 text-center"><p class="text-white/40 text-[10px]">TEAM EARN</p><h2 id="teamEarn" class="text-xl font-bold text-[#00D2FF]">Rs 0</h2></div>
-      <div class="bg-[#00FF88]/10 rounded-2xl p-3 text-center"><p class="text-white/40 text-[10px]">MY REF EARN</p><h2 id="refEarn" class="text-xl font-bold text-[#00FF88]">Rs 0</h2></div>
-    </div>
-    <div id="teamList" class="mt-5 space-y-2"></div>
-  </div>
-</div>
+<div id="teamModal" class="modal" onclick="this.classList.remove('active')"><div class="glass rounded-[28px] p-6 w-full max-w-[95vw] sm:max-w-[420px] max-h-[85dvh] overflow-auto" onclick="event.stopPropagation()"><div class="flex justify-between items-center"><h3 class="font-bold">👥 My Team</h3><button onclick="document.getElementById('teamModal').classList.remove('active')" class="bg-white/10 w-9 h-9 rounded-full">✕</button></div><div id="teamList" class="mt-5 space-y-2"></div></div></div>
 
 <script>
-let params = new URLSearchParams(window.location.search);
-let refId = params.get('ref');
-let users = JSON.parse(localStorage.getItem('taskup_users') || "{}");
-let currentUser = localStorage.getItem('taskup_current');
-let tasks = [
-  {icon:"✈️", name:"Join Telegram Channel", reward:20, link:"https://t.me/YourChannel"},
-  {icon:"📸", name:"Follow on Instagram", reward:15, link:"https://instagram.com"},
-  {icon:"▶️", name:"Subscribe YouTube", reward:20, link:"https://youtube.com"},
-  {icon:"🎁", name:"Daily Check-in Bonus", reward:5, link:""}
-];
-
-function save(){ localStorage.setItem('taskup_users', JSON.stringify(users)); }
-if(refId){
-  let el = document.getElementById('refMsg');
-  el.classList.remove('hidden');
-  el.innerText = "🎁 Referral Active: "+refId;
-}
-
-function register(){
- let u = document.getElementById('username').value.trim();
- let p = document.getElementById('password').value.trim();
- if(!u ||!p){ alert("Username / Password likho"); return; }
- if(!users[u]){
-   users[u] = {pass:btoa(p), balance:50, refs:0, id:Date.now().toString().slice(-6), joined: new Date().toISOString(), myTeam:[]};
-   if(refId){
-     let refUserKey = Object.keys(users).find(k=>users[k].id==refId);
-     if(refUserKey && refUserKey!== u){
-       users[refUserKey].balance += 25;
-       users[refUserKey].refs += 1;
-       if(!users[refUserKey].myTeam) users[refUserKey].myTeam=[];
-       users[refUserKey].myTeam.push({name:u, date:new Date().toLocaleDateString(), earn:25});
-     }
-   }
-   save();
- } else {
-   if(btoa(p)!== users[u].pass){ alert("Wrong password!"); return; }
- }
- currentUser = u;
- localStorage.setItem('taskup_current', u);
- showMain();
-}
-
-function showMain(){
- if(!currentUser ||!users[currentUser]) return;
- document.getElementById('loginPage').style.display="none";
- document.getElementById('mainPage').style.display="block";
- document.getElementById('userName').innerText = currentUser;
- document.getElementById('bal').innerText = users[currentUser].balance;
- document.getElementById('refs').innerText = users[currentUser].refs;
- document.getElementById('refLink').value = window.location.origin + window.location.pathname + "?ref=" + users[currentUser].id;
- renderTasks();
- renderHistory();
-}
-
-function renderTasks(){
- let html = "";
- let done = JSON.parse(localStorage.getItem('done_'+currentUser) || "[]");
- tasks.forEach((t,i)=>{
-   let isDone = done.includes(i);
-   html += `<div class="task-card bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex justify-between items-center">
-     <div class="flex gap-3 items-center"><div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">${t.icon}</div>
-     <div><p class="font-bold text-sm">${t.name}</p><p class="text-[#00FF88] text-xs">+Rs ${t.reward}</p></div></div>
-     <button onclick="doTask(${i})" ${isDone?'disabled':''} class="${isDone?'bg-white/10 text-white/30':'gradient-btn'} px-5 py-2.5 rounded-xl text-xs font-bold">${isDone?'Done ✓':'Claim'}</button>
-   </div>`;
- });
- document.getElementById('tasksList').innerHTML = html;
-}
-
-function doTask(i){
- let done = JSON.parse(localStorage.getItem('done_'+currentUser) || "[]");
- if(done.includes(i)) return;
- if(tasks[i].link) window.open(tasks[i].link, '_blank');
- users[currentUser].balance += tasks[i].reward;
- done.push(i);
- localStorage.setItem('done_'+currentUser, JSON.stringify(done));
- save();
- document.getElementById('bal').innerText = users[currentUser].balance;
- renderTasks();
-}
-
-function withdraw(){
- let amt = parseInt(document.getElementById('amount').value);
- let acc = document.getElementById('accNum').value.trim();
- if(users[currentUser].balance < 500){ alert("Min Rs 500 required!"); return; }
- if(!amt || amt < 500 || amt > users[currentUser].balance){ alert("Invalid Amount!"); return; }
- if(!acc){ alert("Account number likho"); return; }
- users[currentUser].balance -= amt; save();
- document.getElementById('bal').innerText = users[currentUser].balance;
- let w = JSON.parse(localStorage.getItem('withdraws') || "[]");
- let myW = JSON.parse(localStorage.getItem('my_withdraws_'+currentUser) || "[]");
- let obj = {id:Date.now(), user:currentUser, amount:amt, account:acc, date:new Date().toLocaleString(), status:"Pending"};
- w.push(obj);
- myW.push(obj);
- localStorage.setItem('withdraws', JSON.stringify(w));
- localStorage.setItem('my_withdraws_'+currentUser, JSON.stringify(myW));
- document.getElementById('wMsg').innerHTML = `<span class="text-[#00FF88] bg-[#00FF88]/10 px-3 py-2 rounded-xl block">✅ Request Sent: Rs ${amt}</span>`;
- renderHistory();
-}
-
-function renderHistory(){
- let myW = JSON.parse(localStorage.getItem('my_withdraws_'+currentUser) || "[]");
- let el = document.getElementById('historyList');
- if(myW.length==0){ el.innerHTML = `<p class="text-white/30 text-center py-4 text-sm">No withdrawal yet</p>`; return; }
- el.innerHTML = myW.slice().reverse().map(w=>{
-   let color = w.status=="Pending"? "bg-yellow-500/20 text-yellow-400" : w.status=="Paid"? "bg-[#00FF88]/20 text-[#00FF88]" : "bg-red-500/20 text-red-400";
-   return `<div class="bg-white/5 border border-white/5 rounded-xl p-3 flex justify-between items-center">
-     <div><p class="font-bold text-sm">Rs ${w.amount}</p><p class="text-white/40 text-[11px]">${w.date} • ${w.account}</p></div>
-     <span class="${color} px-3 py-1 rounded-full text-[10px] font-bold">${w.status}</span>
-   </div>`;
- }).join('');
-}
-
-function openTeam(){
- let user = users[currentUser];
- let team = user.myTeam || [];
- document.getElementById('teamModal').classList.add('active');
- document.getElementById('teamCount').innerText = team.length;
- document.getElementById('refEarn').innerText = "Rs "+(team.length*25);
- let totalTeamBal = 0;
- team.forEach(m=>{ if(users[m.name]) totalTeamBal += users[m.name].balance; });
- document.getElementById('teamEarn').innerText = "Rs "+totalTeamBal;
- let listEl = document.getElementById('teamList');
- if(team.length==0){ listEl.innerHTML = `<p class="text-white/30 text-center py-8 text-sm">No referrals yet.<br>Share your link!</p>`; return; }
- listEl.innerHTML = team.map(m=>{
-   let bal = users[m.name]?.balance || 0;
-   return `<div class="bg-white/5 rounded-xl p-3 flex justify-between items-center"><div><p class="font-bold text-sm">${m.name}</p><p class="text-white/40 text-[11px]">Joined: ${m.date}</p></div><div class="text-right"><p class="text-[#00FF88] text-xs font-bold">Rs ${bal}</p><p class="text-white/30 text-[10px]">Their Balance</p></div></div>`;
- }).join('');
-}
-function closeTeam(e){ if(e.target.id=="teamModal") document.getElementById('teamModal').classList.remove('active'); }
-function copyRef(){ navigator.clipboard.writeText(document.getElementById('refLink').value); alert("Copied!"); }
-function shareWA(){ let link = document.getElementById('refLink').value; window.open(`https://wa.me/?text=🔥 TaskUp Pro se kamao: ${encodeURIComponent(link)}`, '_blank'); }
-function logout(){ localStorage.removeItem('taskup_current'); location.reload(); }
-if(currentUser && users[currentUser]) showMain();
+const DB_URL="https://taskup13-default-rtdb.firebaseio.com";
+let params=new URLSearchParams(window.location.search); let refId=params.get('ref'); let currentUser=localStorage.getItem('taskup_current');
+let tasks=[{id:"tg", name:"Join Telegram Channel", reward:20, link:"https://t.me/", icon:"✈️"}, {id:"insta", name:"Follow Instagram", reward:15, link:"https://instagram.com", icon:"📸"}, {id:"yt", name:"Subscribe YouTube", reward:20, link:"https://youtube.com", icon:"▶️"}, {id:"bonus", name:"Daily Check-in", reward:5, link:"", icon:"🎁"}];
+async function dbGet(p){let r=await fetch(`${DB_URL}/${p}.json`);return await r.json();}
+async function dbSet(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PUT',body:JSON.stringify(d)});}
+async function dbPatch(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PATCH',body:JSON.stringify(d)});}
+async function dbPush(p,d){let r=await fetch(`${DB_URL}/${p}.json`,{method:'POST',body:JSON.stringify(d)});let j=await r.json();return j.name;}
+if(refId){document.getElementById('refMsg').classList.remove('hidden');document.getElementById('refMsg').innerText="🎁 Referral: "+refId;}
+async function register(){let u=document.getElementById('username').value.trim();let p=document.getElementById('password').value.trim();if(!u||!p)return alert("Username / Password likho");document.getElementById('regBtn').innerText="Syncing...";let ex=await dbGet(`users/${u}`);if(ex){if(ex.pass!==btoa(p)){alert("Wrong Password!");document.getElementById('regBtn').innerText="Continue →";return;}}else{let id=Date.now().toString().slice(-6);await dbSet(`users/${u}`,{pass:btoa(p),balance:50,refs:0,id:id,joined:new Date().toLocaleDateString(),myTeam:[],lastTasks:{},usedPromos:[]});if(refId){let all=await dbGet(`users`);if(all){let rk=Object.keys(all).find(k=>all[k].id==refId);if(rk&&rk!==u){let team=all[rk].myTeam||[];team.push({name:u,date:new Date().toLocaleDateString()});await dbPatch(`users/${rk}`,{balance:all[rk].balance+25,refs:all[rk].refs+1,myTeam:team});}}}}localStorage.setItem('taskup_current',u);currentUser=u;showMain();}
+async function showMain(){if(!currentUser)return;document.getElementById('loginPage').style.display="none";document.getElementById('mainPage').style.display="block";let data=await dbGet(`users/${currentUser}`);if(!data)return;document.getElementById('userName').innerText=currentUser;document.getElementById('bal').innerText=data.balance;document.getElementById('refs').innerText=data.refs;document.getElementById('refLink').value=window.location.origin+window.location.pathname+"?ref="+data.id;renderTasks();renderHistory();}
+async function renderTasks(){let userData=await dbGet(`users/${currentUser}`);let lastTasks=userData.lastTasks||{};let now=Date.now();let html="";tasks.forEach((t)=>{let last=lastTasks[t.id]||0;let diff=now-last;let oneDay=86400000;let can=diff>=oneDay;let rem=oneDay-diff;let btnText=can?"Claim":`${Math.floor(rem/3600000)}h ${Math.floor((rem%3600000)/60000)}m`;let btnClass=can?"gradient-btn":"bg-white/10 text-white/30";let dis=can?"":"disabled";html+=`<div class="task-card bg-white/[0.05] border border-white/10 rounded-2xl p-4 flex justify-between items-center gap-2"><div class="flex gap-3 items-center min-w-0"><div class="w-11 h-11 bg-white/[0.08] border border-white/10 rounded-xl flex items-center justify-center text-lg shrink-0">${t.icon}</div><div class="min-w-0"><p class="font-bold text-[13px] truncate">${t.name}</p><p class="text-[#00FF88] text-[11px]">+Rs ${t.reward} • 24H</p></div></div><button onclick="doTask('${t.id}',${t.reward},'${t.link}')" ${dis} class="${btnClass} px-4 py-2.5 rounded-xl text-[11px] font-bold shrink-0">${btnText}</button></div>`;});document.getElementById('tasksList').innerHTML=html;}
+async function doTask(id,rew,link){let userData=await dbGet(`users/${currentUser}`);let last=userData.lastTasks||{};let now=Date.now();if(last[id]&&now-last[id]<86400000)return alert("24h baad!");if(link)window.open(link,'_blank');last[id]=now;await dbPatch(`users/${currentUser}`,{balance:userData.balance+rew,lastTasks:last});document.getElementById('bal').innerText=userData.balance+rew;renderTasks();}
+async function redeemPromo(){let code=document.getElementById('promoInput').value.trim().toUpperCase();if(!code)return alert("Code likho!");let btn=document.getElementById('promoBtn');let msg=document.getElementById('promoMsg');btn.innerText="...";let promoData=await dbGet(`promoCodes/${code}`);let defaultCodes={"WELCOME50":{reward:50,active:true},"EID100":{reward:100,active:true},"BONUS25":{reward:25,active:true},"TASKUP20":{reward:20,active:true}};let promo=promoData||defaultCodes[code];if(!promo||!promo.active){msg.className="text-center text-xs mt-3 block bg-red-500/10 text-red-400 py-3 rounded-xl";msg.innerText="❌ Invalid Code";btn.innerText="Redeem";return;}let userData=await dbGet(`users/${currentUser}`);let used=userData.usedPromos||[];if(used.includes(code)){msg.className="text-center text-xs mt-3 block bg-yellow-500/10 text-yellow-400 py-3 rounded-xl";msg.innerText="⚠️ Already Used!";btn.innerText="Redeem";return;}used.push(code);await dbPatch(`users/${currentUser}`,{balance:userData.balance+promo.reward,usedPromos:used});if(promoData)await dbPatch(`promoCodes/${code}`,{usedCount:(promo.usedCount||0)+1});document.getElementById('bal').innerText=userData.balance+promo.reward;msg.className="text-center text-xs mt-3 block bg-[#00FF88]/10 text-[#00FF88] py-3 rounded-xl font-bold";msg.innerText=`✅ Rs ${promo.reward} Added!`;document.getElementById('promoInput').value="";btn.innerText="Redeem";}
+async function withdraw(){let amt=parseInt(document.getElementById('amount').value);let acc=document.getElementById('accNum').value.trim();let data=await dbGet(`users/${currentUser}`);if(data.balance<500)return alert("Min Rs 500");if(!amt||amt<500||amt>data.balance)return alert("Invalid");if(!acc)return alert("Account likho");await dbPatch(`users/${currentUser}`,{balance:data.balance-amt});let pushId=await dbPush(`withdraws`,{id:"",user:currentUser,amount:amt,account:acc,date:new Date().toLocaleString(),status:"Pending"});await dbPatch(`withdraws/${pushId}`,{id:pushId});await dbSet(`my_withdraws/${currentUser}/${pushId}`,{id:pushId,user:currentUser,amount:amt,account:acc,date:new Date().toLocaleString(),status:"Pending"});document.getElementById('wMsg').innerHTML=`<span class="text-[#00FF88] bg-[#00FF88]/10 border border-[#00FF88]/20 px-4 py-3 rounded-xl block font-bold">✅ Rs ${amt} Pending</span>`;renderHistory();let nd=await dbGet(`users/${currentUser}`);document.getElementById('bal').innerText=nd.balance;}
+async function renderHistory(){let data=await dbGet(`my_withdraws/${currentUser}`);let el=document.getElementById('historyList');if(!data){el.innerHTML="<p class='text-white/30 text-center py-6 text-sm'>No withdrawals</p>";return;}let arr=Object.values(data).reverse();el.innerHTML=arr.map(w=>{let color=w.status=="Pending"?"bg-yellow-500/15 text-yellow-400 border-yellow-500/20":w.status=="Paid"?"bg-[#00FF88]/15 text-[#00FF88] border-[#00FF88]/20":"bg-red-500/15 text-red-400 border-red-500/20";return `<div class="bg-white/[0.04] border border-white/5 rounded-xl p-4 flex justify-between items-center gap-2"><div class="min-w-0"><p class="font-bold text-sm">Rs ${w.amount}</p><p class="text-white/40 text-[11px] truncate">${w.date} • ${w.account}</p></div><span class="${color} border px-3.5 py-1.5 rounded-full text-[10px] font-bold shrink-0">${w.status}</span></div>`;}).join('');}
+async function openTeam(){document.getElementById('teamModal').classList.add('active');let data=await dbGet(`users/${currentUser}`);let team=data.myTeam||[];document.getElementById('teamList').innerHTML=team.length==0?"<p class='text-white/30 text-center py-8'>No team yet</p>":team.map(m=>`<div class="bg-white/[0.05] border border-white/5 rounded-xl p-4 flex justify-between items-center"><p class="font-bold text-sm">${m.name}</p><p class="text-white/40 text-xs">${m.date}</p></div>`).join('');}
+function copyRef(){navigator.clipboard.writeText(document.getElementById('refLink').value);alert("Copied!");}
+function shareWA(){window.open(`https://wa.me/?text=${encodeURIComponent(document.getElementById('refLink').value)}`,'_blank');}
+function logout(){localStorage.removeItem('taskup_current');location.reload();}
+if(currentUser)showMain();
 </script>
 </body>
 </html>
