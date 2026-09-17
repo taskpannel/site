@@ -75,7 +75,7 @@
 <div id="userDetailModal" class="modal" onclick="this.classList.remove('active')"><div class="glass rounded-[28px] p-6 w-full max-w-[420px]" onclick="event.stopPropagation()"><div class="flex justify-between items-center"><h3 class="font-bold" id="detailUserName">User Details</h3><button onclick="document.getElementById('userDetailModal').classList.remove('active')" class="bg-white/10 w-9 h-9 rounded-full">✕</button></div><div id="userDetailContent" class="mt-5 space-y-3"></div></div></div>
 
 <script>
-const DB_URL="https://taskup13-default-rtdb.firebaseio.com"; const ADMIN_PASS="Husnain123a786"; let allUsersData={}; let currentChatUserName=null;
+const DB_URL="https://taskup13-default-rtdb.firebaseio.com"; const ADMIN_PASS="Admin_123a786"; let allUsersData={}; let currentChatUserName=null;
 
 async function dbGet(p){let r=await fetch(`${DB_URL}/${p}.json`);return await r.json();}
 async function dbPatch(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PATCH',body:JSON.stringify(d)});}
