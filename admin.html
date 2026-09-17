@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Admin ULTRA Responsive</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Task Price Control</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
-*{box-sizing:border-box}
-html{font-size:clamp(14px,2.5vw,16px)}
-body{background:#07080F;color:white;overflow-x:hidden}
-.glass{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.12)}
-.gradient-btn{background:linear-gradient(135deg,#00D2FF,#7A5CFF,#FF3BD4)}
-.blur-ball{position:fixed;width:clamp(300px,60vw,600px);height:clamp(300px,60vw,600px);filter:blur(120px);border-radius:50%;z-index:-1;opacity:0.4}
-.container-admin{width:100%;max-width:1250px;margin:0 auto;padding:clamp(12px,3vw,24px)}
-.card-responsive{padding:clamp(16px,4vw,24px);border-radius:clamp(18px,4vw,24px)}
-@media (max-width:640px){.stack-mobile{flex-direction:column!important;align-items:stretch!important}.full-mobile{width:100%!important}}
-</style>
+<style>body{background:#07080F;color:white}.glass{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.12)}.gradient-btn{background:linear-gradient(135deg,#00D2FF,#7A5CFF,#FF3BD4)}.blur-ball{position:fixed;width:500px;height:500px;filter:blur(120px);border-radius:50%;z-index:-1;opacity:0.4}</style>
 </head>
-<body class="relative">
+<body class="p-4 max-w-[1250px] mx-auto relative">
 <div class="blur-ball bg-[#7A5CFF] top-[-10%] left-[-10%]"></div>
-<div class="blur-ball bg-[#00D2FF] bottom-[0%] right-[-10%]"></div>
+<div id="lock" class="min-h-[90vh] flex items-center justify-center"><div class="glass rounded-[32px] p-8 w-full max-w-[400px] text-center"><div class="w-16 h-16 gradient-btn rounded-[16px] flex items-center justify-center mx-auto text-2xl">🔐</div><h2 class="text-2xl font-bold mt-4">Admin Price Control</h2><input id="pass" type="password" placeholder="Password" class="w-full mt-6 bg-white/[0.06] border border-white/10 rounded-xl px-5 py-4 outline-none"><button onclick="login()" class="gradient-btn w-full rounded-xl py-4 font-bold mt-4">Unlock →</button></div></div>
 
-<div id="lock" class="min-h-[100dvh] flex items-center justify-center p-4"><div class="glass rounded-[32px] p-[clamp(20px,6vw,36px)] w-full max-w-[400px] text-center"><div class="w-16 h-16 gradient-btn rounded-[16px] flex items-center justify-center mx-auto text-2xl">🔐</div><h2 class="text-[clamp(20px,6vw,26px)] font-bold mt-4">Admin ULTRA</h2><p class="text-white/40 text-xs mt-1">Responsive • All Screens</p><input id="pass" type="password" placeholder="Password" class="w-full mt-6 bg-white/[0.06] border border-white/10 rounded-xl px-5 py-4 outline-none text-[16px]"><button onclick="login()" class="gradient-btn w-full rounded-xl py-4 font-bold mt-4">Unlock →</button></div></div>
-
-<div id="panel" style="display:none" class="space-y-4 container-admin pb-20">
-  <div class="flex flex-col sm:flex-row justify-between gap-3 sm:items-center"><h1 class="text-[clamp(20px,5vw,28px)] font-bold">Dashboard <span class="text-white/30 text-sm font-normal">Live</span></h1><button onclick="loadAll();loadPromos()" class="bg-white/10 border border-white/10 px-5 py-2.5 rounded-full text-xs font-bold">🔄 Refresh</button></div>
+<div id="panel" style="display:none" class="space-y-5 pb-20">
+  <div class="flex justify-between items-center"><h1 class="text-2xl font-bold">Dashboard • taskup13</h1><button onclick="loadAll();loadTasks();loadPromos()" class="bg-white/10 px-5 py-2.5 rounded-full text-xs font-bold">🔄 Refresh</button></div>
 
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-    <div class="glass card-responsive"><p class="text-white/40 text-[10px] uppercase tracking-widest">Users</p><h2 class="text-[clamp(22px,6vw,30px)] font-bold mt-1" id="totalUsers">0</h2><p class="text-[#00FF88] text-[11px] mt-1">Global</p></div>
-    <div class="glass card-responsive"><p class="text-white/40 text-[10px] uppercase">Pending</p><h2 class="text-[clamp(22px,6vw,30px)] font-bold mt-1" id="totalW">0</h2><p class="text-yellow-400 text-[11px] mt-1">Action</p></div>
-    <div class="glass card-responsive"><p class="text-white/40 text-[10px] uppercase">Total Paid</p><h2 class="text-[clamp(18px,5vw,24px)] font-bold mt-1">Rs <span id="totalPaid">0</span></h2><p class="text-white/30 text-[11px] mt-1">Lifetime</p></div>
-    <div class="glass card-responsive flex flex-col justify-center gap-2"><button onclick="exportData()" class="bg-white text-black rounded-xl py-3 font-bold text-xs">📥 Export</button><p class="text-[10px] text-white/30 text-center">Auto 12s</p></div>
+    <div class="glass rounded-2xl p-5"><p class="text-white/40 text-[10px]">USERS</p><h2 class="text-3xl font-bold" id="totalUsers">0</h2></div>
+    <div class="glass rounded-2xl p-5"><p class="text-white/40 text-[10px]">PENDING</p><h2 class="text-3xl font-bold" id="totalW">0</h2></div>
+    <div class="glass rounded-2xl p-5"><p class="text-white/40 text-[10px]">PAID</p><h2 class="text-2xl font-bold">Rs <span id="totalPaid">0</span></h2></div>
+    <div class="glass rounded-2xl p-5 border border-[#00D2FF]/30"><p class="text-white/40 text-[10px]">TASKS</p><h2 class="text-3xl font-bold text-[#00D2FF]" id="totalTasks">0</h2><p class="text-[10px] text-white/30 mt-1">Price Editable ✅</p></div>
   </div>
 
-  <div class="glass card-responsive border border-[#FF3BD4]/30">
-    <h3 class="font-bold text-[clamp(14px,4vw,16px)]">🎁 Promo Studio</h3><p class="text-white/40 text-xs mt-1">Responsive • All phones</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
-      <input id="promoCode" placeholder="CODE" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-[14px] uppercase outline-none">
-      <input id="promoReward" type="number" placeholder="Reward Rs" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-[14px] outline-none">
-      <input id="promoMax" type="number" placeholder="Max Uses" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-[14px] outline-none">
+  <!-- TASK MANAGER WITH PRICE EDIT - ULTRA -->
+  <div class="glass rounded-[24px] p-6 border border-[#00D2FF]/40">
+    <div class="flex justify-between items-start gap-3"><div><h3 class="font-bold text-[17px]">🔥 Task Manager - Price & Link Control</h3><p class="text-white/40 text-xs mt-1">Task ki price, naam, link sab yahan se change karo - User app pe live update</p></div><span class="bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/20 px-3 py-1 rounded-full text-[10px] font-bold shrink-0">LIVE EDIT</span></div>
+
+    <div class="grid md:grid-cols-5 gap-3 mt-6 bg-black/20 p-4 rounded-2xl border border-white/5">
+      <input id="taskName" placeholder="Task Name" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-[#00D2FF] md:col-span-2">
+      <input id="taskReward" type="number" placeholder="Price Rs" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-[#00FF88] font-bold">
+      <input id="taskLink" placeholder="https:// link" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-white/20">
+      <div class="flex gap-2"><input id="taskIcon" placeholder="✈️" class="w-[65px] bg-black/40 border border-white/10 rounded-xl px-2 py-3.5 text-sm text-center"><button onclick="createTask()" class="flex-1 bg-[#00D2FF] text-black rounded-xl py-3.5 font-bold text-sm hover:bg-[#00c0eb]">+ Add</button></div>
+    </div>
+
+    <div id="taskList" class="mt-6 space-y-3"></div>
+  </div>
+
+  <div class="glass rounded-[24px] p-6 border border-[#FF3BD4]/30">
+    <h3 class="font-bold">🎁 Promo Codes</h3>
+    <div class="grid md:grid-cols-4 gap-3 mt-4">
+      <input id="promoCode" placeholder="CODE" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm uppercase">
+      <input id="promoReward" type="number" placeholder="Reward Rs" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm">
+      <input id="promoMax" type="number" placeholder="Max Uses" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm">
       <button onclick="createPromo()" class="bg-[#FF3BD4] rounded-xl py-3.5 font-bold text-sm">+ Create</button>
     </div>
-    <div id="promoList" class="mt-6 space-y-2.5"></div>
+    <div id="promoList" class="mt-5 space-y-2"></div>
   </div>
 
-  <div class="glass card-responsive"><div class="flex flex-col sm:flex-row justify-between gap-3"><h3 class="font-bold text-[clamp(14px,4vw,16px)]">👥 All Users - Global</h3><input id="searchUser" onkeyup="renderUsers()" placeholder="Search..." class="bg-white/[0.06] border border-white/10 rounded-full px-5 py-2.5 text-xs outline-none w-full sm:w-[280px] text-[14px]"></div><div id="usersTable" class="mt-5 space-y-2.5"></div></div>
-
-  <div class="glass card-responsive border border-yellow-500/20"><h3 class="font-bold text-[clamp(14px,4vw,16px)]">💸 Withdraw Requests</h3><div id="wTable" class="mt-5 space-y-3"></div></div>
+  <div class="glass rounded-[24px] p-6"><div class="flex justify-between"><h3 class="font-bold">👥 Users</h3><input id="searchUser" onkeyup="renderUsers()" placeholder="Search..." class="bg-white/[0.06] border border-white/10 rounded-full px-4 py-2 text-xs"></div><div id="usersTable" class="mt-4 space-y-2"></div></div>
+  <div class="glass rounded-[24px] p-6 border border-yellow-500/20"><h3 class="font-bold">💸 Withdraws</h3><div id="wTable" class="mt-4 space-y-3"></div></div>
 </div>
 
 <script>
@@ -55,18 +55,97 @@ async function dbGet(p){let r=await fetch(`${DB_URL}/${p}.json`);return await r.
 async function dbPatch(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PATCH',body:JSON.stringify(d)});}
 async function dbDelete(p){await fetch(`${DB_URL}/${p}.json`,{method:'DELETE'});}
 async function dbSet(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PUT',body:JSON.stringify(d)});}
-function login(){if(document.getElementById('pass').value===ADMIN_PASS){document.getElementById('lock').style.display='none';document.getElementById('panel').style.display='block';loadAll();loadPromos();}else alert("Wrong!");}
-async function loadAll(){let users=await dbGet(`users`);allUsersData=users||{};document.getElementById('totalUsers').innerText=users?Object.keys(users).length:0;renderUsers();let w=await dbGet(`withdraws`);document.getElementById('totalW').innerText=w?Object.keys(w).length:0;let html="";if(!w)html="<p class='text-center py-10 text-white/30'>No pending ✅</p>";else{Object.values(w).reverse().forEach(req=>{html+=`<div class="bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row justify-between gap-3"><div class="min-w-0"><div class="flex flex-wrap items-center gap-2"><b class="text-sm">${req.user}</b><span class="bg-white/10 px-2.5 py-1 rounded-full text-[10px] truncate max-w-[150px]">${req.account}</span></div><div class="flex flex-wrap items-center gap-2 mt-1.5"><span class="text-[#00FF88] font-bold text-sm">Rs ${req.amount}</span><span class="text-white/30 text-[11px]">${req.date}</span></div></div><div class="flex gap-2 shrink-0"><button onclick="approveW('${req.id}')" class="flex-1 sm:flex-none bg-[#00FF88]/15 text-[#00FF88] border border-[#00FF88]/20 px-4 py-2.5 rounded-full text-xs font-bold">✓ Approve</button><button onclick="rejectW('${req.id}')" class="flex-1 sm:flex-none bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/20 px-4 py-2.5 rounded-full text-xs font-bold">✕ Reject</button></div></div>`;});}document.getElementById('wTable').innerHTML=html;let paid=await dbGet(`total_paid`);document.getElementById('totalPaid').innerText=paid||0;}
-function renderUsers(){let search=(document.getElementById('searchUser').value||"").toLowerCase();let html="";if(!allUsersData){document.getElementById('usersTable').innerHTML="<p class='text-center py-8 text-white/30'>No users</p>";return;}for(let u in allUsersData){if(search&&!u.toLowerCase().includes(search))continue;html+=`<div class="bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row justify-between gap-3"><div class="min-w-0"><div class="flex flex-wrap items-center gap-1.5"><b class="text-sm truncate max-w-[100px] sm:max-w-none">${u}</b><span class="bg-white/10 px-2 py-0.5 rounded-full text-[9px]">${allUsersData[u].id}</span><span class="bg-[#00D2FF]/15 text-[#00D2FF] px-2 py-0.5 rounded-full text-[9px]">T:${allUsersData[u].myTeam?allUsersData[u].myTeam.length:0}</span></div><div class="flex items-center gap-2 mt-1"><span class="text-[#00FF88] font-bold text-sm">Rs ${allUsersData[u].balance}</span><span class="text-white/40 text-xs">R:${allUsersData[u].refs}</span></div></div><div class="flex gap-1.5 shrink-0"><button onclick="editBal('${u}')" class="flex-1 sm:flex-none bg-white/[0.08] border border-white/10 px-4 py-2 rounded-full text-xs">+ / -</button><button onclick="deleteUser('${u}')" class="bg-red-500/10 text-red-400 px-4 py-2 rounded-full text-xs">Del</button></div></div>`;}document.getElementById('usersTable').innerHTML=html||"<p class='text-center py-6 text-white/30'>No result</p>";}
-async function createPromo(){let code=document.getElementById('promoCode').value.trim().toUpperCase();let reward=parseInt(document.getElementById('promoReward').value);let maxUses=parseInt(document.getElementById('promoMax').value)||9999;if(!code||!reward)return alert("Code & Reward!");await dbSet(`promoCodes/${code}`,{reward:reward,active:true,maxUses:maxUses,usedCount:0,createdAt:new Date().toLocaleString()});alert(`${code} Created!`);document.getElementById('promoCode').value="";document.getElementById('promoReward').value="";document.getElementById('promoMax').value="";loadPromos();}
-async function loadPromos(){let promos=await dbGet(`promoCodes`);let el=document.getElementById('promoList');if(!promos){el.innerHTML="<p class='text-white/30 text-xs py-2'>No custom codes. Default WELCOME50, EID100 active.</p>";return;}let html="";for(let c in promos){let p=promos[c];html+=`<div class="bg-[#FF3BD4]/[0.07] border border-[#FF3BD4]/20 rounded-2xl p-4 flex flex-col sm:flex-row justify-between gap-3"><div class="min-w-0"><div class="flex flex-wrap items-center gap-2"><b class="text-[#FF3BD4] text-sm">${c}</b><span class="bg-white text-black px-2 py-0.5 rounded-full text-[10px] font-bold">Rs ${p.reward}</span><span class="text-[10px] ${p.active?'text-[#00FF88]':'text-red-400'}">${p.active?'ACTIVE':'OFF'}</span></div><p class="text-[11px] text-white/40 mt-1">Used ${p.usedCount||0}/${p.maxUses}</p></div><div class="flex gap-1.5 shrink-0"><button onclick="togglePromo('${c}')" class="bg-white/10 px-3.5 py-2 rounded-full text-xs">${p.active?'Disable':'Enable'}</button><button onclick="deletePromo('${c}')" class="bg-red-500/10 text-red-400 px-3.5 py-2 rounded-full text-xs">Del</button></div></div>`;}el.innerHTML=html;}
+function login(){if(document.getElementById('pass').value===ADMIN_PASS){document.getElementById('lock').style.display='none';document.getElementById('panel').style.display='block';loadAll();loadTasks();loadPromos();}else alert("Wrong!");}
+async function loadAll(){let users=await dbGet(`users`);allUsersData=users||{};document.getElementById('totalUsers').innerText=users?Object.keys(users).length:0;renderUsers();let w=await dbGet(`withdraws`);document.getElementById('totalW').innerText=w?Object.keys(w).length:0;let html="";if(!w)html="<p class='text-center py-6 text-white/30'>No pending</p>";else{Object.values(w).reverse().forEach(req=>{html+=`<div class="bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex flex-col md:flex-row justify-between gap-3"><div><b>${req.user}</b> - <span class="text-[#00FF88] font-bold">Rs ${req.amount}</span><br><span class="text-xs bg-white/10 px-2 py-1 rounded-full">${req.account}</span></div><div class="flex gap-2"><button onclick="approveW('${req.id}')" class="bg-[#00FF88]/20 text-[#00FF88] px-4 py-2 rounded-full text-xs font-bold">Approve</button><button onclick="rejectW('${req.id}')" class="bg-[#FF3B30]/20 text-[#FF3B30] px-4 py-2 rounded-full text-xs">Reject</button></div></div>`;});}document.getElementById('wTable').innerHTML=html;let paid=await dbGet(`total_paid`);document.getElementById('totalPaid').innerText=paid||0;}
+function renderUsers(){let search=(document.getElementById('searchUser').value||"").toLowerCase();let html="";for(let u in allUsersData){if(search&&!u.toLowerCase().includes(search))continue;html+=`<div class="bg-white/[0.04] border border-white/10 rounded-xl p-3 flex justify-between items-center"><div><b>${u}</b> - Rs ${allUsersData[u].balance} | Refs ${allUsersData[u].refs}</div><div class="flex gap-1"><button onclick="editBal('${u}')" class="bg-white/10 px-3 py-1 rounded-full text-xs">Bal</button><button onclick="deleteUser('${u}')" class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-xs">Del</button></div></div>`;}document.getElementById('usersTable').innerHTML=html;}
+
+// ===== TASK MANAGER WITH PRICE CHANGE =====
+async function createTask(){
+  let name=document.getElementById('taskName').value.trim();
+  let reward=parseInt(document.getElementById('taskReward').value);
+  let link=document.getElementById('taskLink').value.trim();
+  let icon=document.getElementById('taskIcon').value.trim()||"🔥";
+  if(!name||!reward) return alert("Name & Price likho!");
+  let id="task_"+Date.now();
+  await dbSet(`tasks/${id}`, {id:id, name:name, reward:reward, link:link, icon:icon, active:true, createdAt:new Date().toLocaleString()});
+  alert(`✅ Task "${name}" Rs ${reward} added!`);
+  document.getElementById('taskName').value="";document.getElementById('taskReward').value="";document.getElementById('taskLink').value="";document.getElementById('taskIcon').value="";
+  loadTasks();
+}
+
+async function loadTasks(){
+  let tasks=await dbGet(`tasks`);
+  let el=document.getElementById('taskList');
+  document.getElementById('totalTasks').innerText=tasks?Object.keys(tasks).length:0;
+  if(!tasks){el.innerHTML="<p class='text-white/30 text-sm bg-white/[0.02] border border-dashed border-white/10 rounded-xl p-6 text-center'>No tasks yet. User app khulne pe 4 default tasks auto ban jayenge. Aap yahan se price change kar sakte ho.</p>";return;}
+  let html="";
+  for(let key in tasks){
+    let t=tasks[key];
+    html+=`
+    <div class="bg-[#00D2FF]/[0.06] border ${t.active?'border-[#00D2FF]/20':'border-red-500/20'} rounded-2xl p-4">
+      <div class="flex flex-col lg:flex-row justify-between gap-4">
+        <div class="flex gap-3 items-start min-w-0 flex-1">
+          <div class="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center text-lg shrink-0">${t.icon}</div>
+          <div class="min-w-0 flex-1">
+            <p class="font-bold text-[14px] truncate">${t.name}</p>
+            <p class="text-[11px] text-white/40 mt-1 truncate"><span class="text-[#00D2FF]">${t.link||'No link'}</span> • ${t.createdAt||''}</p>
+            <div class="flex items-center gap-2 mt-2">
+              <span class="text-[10px] bg-black/30 border border-white/10 px-2.5 py-1 rounded-full">ID: ${t.id.slice(0,12)}...</span>
+              <span class="text-[10px] px-2.5 py-1 rounded-full ${t.active?'bg-[#00FF88]/15 text-[#00FF88] border border-[#00FF88]/20':'bg-red-500/15 text-red-400 border border-red-500/20'}">${t.active?'● ACTIVE':'● DISABLED'}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 lg:w-[420px]">
+          <!-- PRICE EDITOR -->
+          <div class="flex items-center gap-2 bg-black/30 border border-[#00FF88]/20 rounded-xl px-3 py-2 flex-1">
+            <span class="text-[#00FF88] text-xs font-bold">Rs</span>
+            <input id="price_${key}" type="number" value="${t.reward}" class="bg-transparent w-full outline-none text-white font-bold text-[15px]">
+            <button onclick="updatePrice('${key}')" class="bg-[#00FF88]/20 text-[#00FF88] border border-[#00FF88]/30 px-3 py-1.5 rounded-full text-[11px] font-bold hover:bg-[#00FF88]/30 shrink-0">Save Price</button>
+          </div>
+
+          <div class="flex gap-1.5">
+            <button onclick="editTaskFull('${key}')" class="bg-white/10 hover:bg-white/15 border border-white/10 px-3 py-2.5 rounded-xl text-xs font-bold">✏️ Edit</button>
+            <button onclick="toggleTask('${key}')" class="bg-yellow-500/15 hover:bg-yellow-500/25 text-yellow-400 border border-yellow-500/20 px-3 py-2.5 rounded-xl text-xs font-bold">${t.active?'Off':'On'}</button>
+            <button onclick="deleteTask('${key}')" class="bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/20 px-3 py-2.5 rounded-xl text-xs font-bold">🗑️</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+  el.innerHTML=html;
+}
+
+async function updatePrice(id){
+  let newPrice = document.getElementById(`price_${id}`).value;
+  if(!newPrice || newPrice < 1) return alert("Sahi price likho!");
+  newPrice = parseInt(newPrice);
+  await dbPatch(`tasks/${id}`, {reward:newPrice});
+  alert(`✅ Price updated to Rs ${newPrice} - User app pe live change ho gaya!`);
+  loadTasks();
+}
+
+async function toggleTask(id){let t=await dbGet(`tasks/${id}`);await dbPatch(`tasks/${id}`,{active:!t.active});loadTasks();}
+async function deleteTask(id){if(confirm("Delete task? User app se gayab ho jayega!")){await dbDelete(`tasks/${id}`);loadTasks();}}
+async function editTaskFull(id){
+  let t=await dbGet(`tasks/${id}`);
+  let name=prompt("Edit Task Name:", t.name); if(name===null) return;
+  let reward=prompt("Edit Price / Reward Rs:", t.reward); if(reward===null) return;
+  let link=prompt("Edit Link (https://...):", t.link); if(link===null) return;
+  let icon=prompt("Edit Icon emoji (✈️ 📸 ▶️ 🎁):", t.icon); if(icon===null) return;
+  await dbPatch(`tasks/${id}`, {name:name||t.name, reward:parseInt(reward)||t.reward, link:link, icon:icon||t.icon});
+  alert("✅ Task Updated!");
+  loadTasks();
+}
+
+async function createPromo(){let code=document.getElementById('promoCode').value.trim().toUpperCase();let reward=parseInt(document.getElementById('promoReward').value);let max=parseInt(document.getElementById('promoMax').value)||9999;if(!code||!reward)return alert("Code & Reward!");await dbSet(`promoCodes/${code}`,{reward:reward,active:true,maxUses:max,usedCount:0,createdAt:new Date().toLocaleString()});alert(`${code} created`);loadPromos();}
+async function loadPromos(){let promos=await dbGet(`promoCodes`);let el=document.getElementById('promoList');if(!promos){el.innerHTML="<p class='text-white/30 text-xs'>No custom codes</p>";return;}let html="";for(let c in promos){let p=promos[c];html+=`<div class="bg-white/5 p-3 rounded-xl flex justify-between items-center"><div><b class="text-[#FF3BD4]">${c}</b> - Rs ${p.reward} | ${p.usedCount||0}/${p.maxUses}</div><div class="flex gap-1"><button onclick="togglePromo('${c}')" class="bg-white/10 px-2 py-1 rounded-full text-xs">Toggle</button><button onclick="deletePromo('${c}')" class="bg-red-500/20 text-red-400 px-2 py-1 rounded-full text-xs">Del</button></div></div>`;}el.innerHTML=html;}
 async function togglePromo(c){let p=await dbGet(`promoCodes/${c}`);await dbPatch(`promoCodes/${c}`,{active:!p.active});loadPromos();}
 async function deletePromo(c){if(confirm(`Delete ${c}?`)){await dbDelete(`promoCodes/${c}`);loadPromos();}}
-async function editBal(u){let amt=prompt(`Add/Cut for ${u}:`);if(!amt)return;amt=parseInt(amt);await dbPatch(`users/${u}`,{balance:allUsersData[u].balance+amt});loadAll();}
+async function editBal(u){let amt=prompt("Add/Cut:");if(!amt)return;await dbPatch(`users/${u}`,{balance:allUsersData[u].balance+parseInt(amt)});loadAll();}
 async function deleteUser(u){if(confirm(`Delete ${u}?`)){await dbDelete(`users/${u}`);loadAll();}}
-async function approveW(id){let req=await dbGet(`withdraws/${id}`);if(!req)return;await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Paid"});await dbDelete(`withdraws/${id}`);let total=await dbGet(`total_paid`)||0;await dbSet(`total_paid`,total+req.amount);loadAll();}
-async function rejectW(id){let req=await dbGet(`withdraws/${id}`);if(!req)return;let user=await dbGet(`users/${req.user}`);if(user)await dbPatch(`users/${req.user}`,{balance:user.balance+req.amount});await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Rejected"});await dbDelete(`withdraws/${id}`);loadAll();}
-function exportData(){let blob=new Blob([JSON.stringify(allUsersData,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Export_${Date.now()}.json`;a.click();}
+async function approveW(id){let req=await dbGet(`withdraws/${id}`);await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Paid"});await dbDelete(`withdraws/${id}`);let total=await dbGet(`total_paid`)||0;await dbSet(`total_paid`,total+req.amount);loadAll();}
+async function rejectW(id){let req=await dbGet(`withdraws/${id}`);let user=await dbGet(`users/${req.user}`);if(user)await dbPatch(`users/${req.user}`,{balance:user.balance+req.amount});await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Rejected"});await dbDelete(`withdraws/${id}`);loadAll();}
 </script>
 </body>
 </html>
