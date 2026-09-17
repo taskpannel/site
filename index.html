@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>TaskUp - Final</title>
+<title>TaskUp - Stats Fixed</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
@@ -22,7 +22,7 @@ body{background:#07080F;color:white;min-height:100dvh}
   <div class="glass rounded-[32px] p-7 text-center">
     <div class="w-[70px] h-[70px] gradient-gold rounded-[20px] flex items-center justify-center mx-auto text-3xl">💎</div>
     <h1 class="text-[28px] font-[800] mt-5">TaskUp <span class="gradient-text">ULTRA</span></h1>
-    <p class="text-white/50 text-[11px] mt-1">CHAT + DAILY CLAIM + 10% REF • NO BANK</p>
+    <p class="text-white/50 text-[11px] mt-1">STATS FIXED • CHAT • DAILY CLAIM</p>
     <div class="mt-6 space-y-3">
       <input id="username" class="w-full bg-white/[0.06] border border-white/10 rounded-2xl px-5 py-4 outline-none" placeholder="Username">
       <input id="password" type="password" class="w-full bg-white/[0.06] border border-white/10 rounded-2xl px-5 py-4 outline-none" placeholder="Password">
@@ -34,12 +34,13 @@ body{background:#07080F;color:white;min-height:100dvh}
 
 <div id="mainPage" style="display:none" class="space-y-4 container-fluid">
   <div class="glass rounded-[28px] p-6">
-    <div class="flex justify-between items-start gap-3"><div><p class="text-white/40 text-[10px] uppercase">Welcome</p><h2 class="text-[20px] font-bold"><span id="userName"></span> 👋</h2><p class="text-[10px] text-white/30 mt-1" id="referredByInfo"></p></div><div class="flex gap-2"><button onclick="openChat()" class="bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/30 px-3 py-2 rounded-full text-[11px] font-bold">💬 Chat</button><button onclick="logout()" class="bg-white/5 border border-white/10 px-3 py-2 rounded-full text-[11px]">Logout</button></div></div>
+    <div class="flex justify-between items-start gap-3"><div><p class="text-white/40 text-[10px] uppercase">Welcome</p><h2 class="text-[20px] font-bold"><span id="userName"></span> 👋</h2><p class="text-[10px] text-white/30 mt-1" id="referredByInfo"></p></div><div class="flex gap-2"><button onclick="openChat()" class="bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/30 px-3 py-2 rounded-full text-[11px] font-bold">💬</button><button onclick="logout()" class="bg-white/5 border border-white/10 px-3 py-2 rounded-full text-[11px]">Logout</button></div></div>
     <div class="mt-5"><p class="text-white/40 text-[10px] uppercase">Total Balance</p><h1 class="text-[42px] font-[800]">Rs <span id="bal" class="gradient-text">0</span></h1>
+      <!-- FIXED STATS CARDS -->
       <div class="grid grid-cols-3 gap-2 mt-4">
-        <div class="bg-white/[0.06] rounded-xl p-2.5 text-center"><p class="text-[9px] text-white/40 uppercase">Ref Earn</p><p class="font-bold text-[12px] text-[#FFD700]" id="statRefEarn">Rs 0</p></div>
-        <div class="bg-white/[0.06] rounded-xl p-2.5 text-center"><p class="text-[9px] text-white/40 uppercase">Team Plans</p><p class="font-bold text-[12px] text-[#00FF88]" id="statTeamPlans">0</p></div>
-        <div class="bg-white/[0.06] rounded-xl p-2.5 text-center"><p class="text-[9px] text-white/40 uppercase">Active</p><p class="font-bold text-[12px]" id="statPlans">0</p></div>
+        <div class="bg-white/[0.06] border border-[#FFD700]/20 rounded-xl p-2.5 text-center"><p class="text-[9px] text-white/40 uppercase">Ref Earn</p><p class="font-bold text-[12px] text-[#FFD700]" id="statRefEarn">Rs 0</p><p class="text-[8px] text-white/20 mt-0.5">10% Commission</p></div>
+        <div class="bg-white/[0.06] border border-[#00FF88]/20 rounded-xl p-2.5 text-center"><p class="text-[9px] text-white/40 uppercase">Team Plans</p><p class="font-bold text-[12px] text-[#00FF88]" id="statTeamPlans">0</p><p class="text-[8px] text-white/20 mt-0.5">Members Plans</p></div>
+        <div class="bg-white/[0.06] border border-white/10 rounded-xl p-2.5 text-center"><p class="text-[9px] text-white/40 uppercase">Active Plans</p><p class="font-bold text-[12px] text-white" id="statPlans">0 Active</p><p class="text-[8px] text-white/20 mt-0.5" id="statPlansDetail">0 Total</p></div>
       </div>
     </div>
   </div>
@@ -47,7 +48,7 @@ body{background:#07080F;color:white;min-height:100dvh}
   <div class="glass rounded-[28px] p-6 border border-[#FFD700]/40">
     <h3 class="font-bold text-[15px]">👥 Referral - 10% Commission</h3>
     <div class="flex gap-2 mt-4"><input id="refLink" readonly class="flex-1 bg-black/50 border border-white/10 rounded-xl px-4 py-3.5 text-[11px] truncate"><button onclick="copyRef()" class="bg-white text-black px-6 rounded-xl font-bold text-sm">Copy</button></div>
-    <div class="grid grid-cols-2 gap-2.5 mt-4"><button onclick="openTeam()" class="bg-white/[0.07] border border-white/10 rounded-xl py-3.5 font-bold text-[13px]">👀 My Team & Earnings</button><button onclick="openChat()" class="bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/30 rounded-xl py-3.5 font-bold text-[13px]">💬 Contact Admin</button></div>
+    <div class="grid grid-cols-2 gap-2.5 mt-4"><button onclick="openTeam()" class="bg-white/[0.07] border border-white/10 rounded-xl py-3.5 font-bold text-[13px]">👀 My Team</button><button onclick="openChat()" class="bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/30 rounded-xl py-3.5 font-bold text-[13px]">💬 Chat Admin</button></div>
   </div>
 
   <div class="glass rounded-[28px] p-6 border border-[#FFD700]/30">
@@ -63,7 +64,6 @@ body{background:#07080F;color:white;min-height:100dvh}
 
   <div class="glass rounded-[28px] p-6 border border-[#00FF88]/20">
     <div class="flex justify-between items-center"><h3 class="font-bold text-[15px]">🔥 Daily Tasks + Daily Plan Claim</h3><span class="text-[10px] bg-[#00FF88]/20 text-[#00FF88] px-3 py-1 rounded-full font-bold">Daily</span></div>
-    <p class="text-white/40 text-[11px] mt-1">Active plan ka daily profit yahi se claim hoga</p>
     <div id="tasksList" class="mt-5 space-y-3"></div>
   </div>
 
@@ -72,17 +72,14 @@ body{background:#07080F;color:white;min-height:100dvh}
     <div id="historyList" class="mt-5 space-y-2.5 max-h-[500px] overflow-y-auto"></div>
   </div>
 
-  <div class="glass rounded-[28px] p-6"><h3 class="font-bold">💸 Withdraw</h3><input id="accNum" placeholder="03xxxxxxxx - Easypaisa/JazzCash" class="w-full mt-5 bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4 outline-none"><input id="amount" type="number" placeholder="Min 500" class="w-full mt-3 bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4 outline-none"><button onclick="withdraw()" class="w-full mt-5 bg-white text-black rounded-xl py-4 font-[800]">Request Withdraw →</button><p id="wMsg" class="text-center text-sm mt-4"></p></div>
+  <div class="glass rounded-[28px] p-6"><h3 class="font-bold">💸 Withdraw</h3><input id="accNum" placeholder="03xxxxxxxx" class="w-full mt-5 bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4 outline-none"><input id="amount" type="number" placeholder="Min 500" class="w-full mt-3 bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4 outline-none"><button onclick="withdraw()" class="w-full mt-5 bg-white text-black rounded-xl py-4 font-[800]">Request Withdraw →</button><p id="wMsg" class="text-center text-sm mt-4"></p></div>
 </div>
 
 <div class="chat-float" onclick="openChat()">💬</div>
 
-<!-- MODALS -->
 <div id="teamModal" class="modal" onclick="this.classList.remove('active')"><div class="glass rounded-[28px] p-6 w-full max-w-[420px] max-h-[85dvh] overflow-auto" onclick="event.stopPropagation()"><div class="flex justify-between items-center"><h3 class="font-bold">👥 My Team</h3><button onclick="document.getElementById('teamModal').classList.remove('active')" class="bg-white/10 w-9 h-9 rounded-full">✕</button></div><div id="teamList" class="mt-5 space-y-3"></div><div id="teamEarnings" class="mt-6 bg-[#FFD700]/10 border border-[#FFD700]/20 rounded-2xl p-4"></div></div></div>
 <div id="myPlansModal" class="modal" onclick="this.classList.remove('active')"><div class="glass rounded-[28px] p-6 w-full max-w-[420px] max-h-[85dvh] overflow-auto" onclick="event.stopPropagation()"><div class="flex justify-between items-center"><h3 class="font-bold">📦 My Plans</h3><button onclick="document.getElementById('myPlansModal').classList.remove('active')" class="bg-white/10 w-9 h-9 rounded-full">✕</button></div><div id="myPlansList" class="mt-5 space-y-3"></div></div></div>
 <div id="planBuyModal" class="modal" onclick="this.classList.remove('active')"><div class="glass rounded-[28px] p-6 w-full max-w-[400px]" onclick="event.stopPropagation()"><h3 class="font-bold text-lg" id="buyPlanName">Buy Plan</h3><p class="text-white/40 text-xs mt-1" id="buyPlanDesc"></p><div class="mt-5 space-y-3"><input id="planAmount" readonly class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 outline-none font-bold"><div class="grid grid-cols-2 gap-2"><button onclick="setPlanMethod('Easypaisa')" id="pEasy" class="bg-white text-black rounded-xl py-3 text-xs font-bold">Easypaisa</button><button onclick="setPlanMethod('JazzCash')" id="pJazz" class="bg-white/10 border border-white/10 rounded-xl py-3 text-xs font-bold">JazzCash</button></div><input id="planTxn" placeholder="Transaction ID" class="w-full bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4 outline-none text-[14px]"><input id="planSender" placeholder="Your Number" class="w-full bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4 outline-none text-[14px]"><button onclick="confirmBuyPlan()" class="w-full gradient-gold text-black rounded-xl py-4 font-[800]">Confirm Buy Plan →</button><p id="buyPlanMsg" class="text-center text-xs mt-2"></p></div></div></div>
-
-<!-- CHAT MODAL - RE-ADDED -->
 <div id="chatModal" class="modal" onclick="if(event.target==this)this.classList.remove('active')"><div class="glass rounded-[28px] w-full max-w-[420px] h-[70vh] flex flex-col overflow-hidden"><div class="p-5 border-b border-white/10 flex justify-between items-center bg-black/20"><div><h3 class="font-bold">💬 Support Chat</h3><p class="text-white/40 text-[11px]">Direct Admin se baat karo</p></div><button onclick="document.getElementById('chatModal').classList.remove('active')" class="bg-white/10 w-9 h-9 rounded-full">✕</button></div><div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-black/10"></div><div class="p-3 border-t border-white/10 bg-black/20 flex gap-2"><input id="chatInput" placeholder="Type message..." class="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-3.5 text-[14px] outline-none" onkeypress="if(event.key==='Enter')sendMessage()"><button onclick="sendMessage()" class="bg-gradient-to-r from-[#00D2FF] to-[#7A5CFF] px-5 rounded-xl font-bold text-sm">Send</button></div></div></div>
 
 <script>
@@ -94,12 +91,83 @@ async function dbGet(p){let r=await fetch(`${DB_URL}/${p}.json`);return await r.
 async function dbSet(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PUT',body:JSON.stringify(d)});}
 async function dbPatch(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PATCH',body:JSON.stringify(d)});}
 async function dbPush(p,d){let r=await fetch(`${DB_URL}/${p}.json`,{method:'POST',body:JSON.stringify(d)});let j=await r.json();return j.name;}
-if(refId){document.getElementById('refMsg').classList.remove('hidden');document.getElementById('refMsg').innerText="🎁 Referral Active: "+refId+" - Rs 25 + 10%!";}
+if(refId){document.getElementById('refMsg').classList.remove('hidden');document.getElementById('refMsg').innerText="🎁 Referral Active: "+refId;}
+
 async function loadTasksFromAdmin(){let adminTasks=await dbGet(`tasks`);if(adminTasks){tasks=Object.values(adminTasks).filter(t=>t.active);}else{tasks=[];}}
 async function loadDepositAccounts(){let acc=await dbGet(`depositAccounts`);if(acc){document.getElementById('depEasy').innerText=acc.easypaisa||"03xx";document.getElementById('depJazz').innerText=acc.jazzcash||"03xx";}}
-async function loadPlans(){let plans=await dbGet(`depositPlans`); allPlans=plans||{}; let el=document.getElementById('plansList'); if(!plans){el.innerHTML=`<p class='text-center text-white/30 py-6'>No plans yet</p>`;return;} let activePlans=Object.values(plans).filter(p=>p.active).sort((a,b)=>a.price-b.price); el.innerHTML=activePlans.map(p=>{let total=p.dailyProfit*p.duration; return `<div class="glass rounded-[20px] p-5 border border-[#FFD700]/20"><div class="flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">${p.name}</h4><p class="text-white/40 text-[11px] mt-1">${p.description||''}</p></div><div class="text-right"><p class="text-[10px] text-white/40 uppercase">Price</p><p class="font-[800] text-[20px] text-[#FFD700]">Rs ${p.price}</p></div></div><div class="grid grid-cols-3 gap-2 mt-4"><div class="bg-black/30 rounded-xl p-3 text-center"><p class="text-[10px] text-white/40 uppercase">Daily</p><p class="font-bold text-[#00FF88] text-[14px]">Rs ${p.dailyProfit}</p></div><div class="bg-black/30 rounded-xl p-3 text-center"><p class="text-[10px] text-white/40 uppercase">Days</p><p class="font-bold text-[14px]">${p.duration}</p></div><div class="bg-black/30 rounded-xl p-3 text-center"><p class="text-[10px] text-white/40 uppercase">Total</p><p class="font-bold text-[#FFD700] text-[14px]">Rs ${total}</p></div></div><button onclick="buyPlan('${p.id}')" class="w-full mt-4 gradient-gold text-black rounded-xl py-3.5 font-[800] text-sm">Buy Plan → Rs ${p.price}</button></div>`;}).join('');}
+
+async function loadPlans(){
+  let plans=await dbGet(`depositPlans`); allPlans=plans||{};
+  let el=document.getElementById('plansList');
+  if(!plans){el.innerHTML=`<p class='text-center text-white/30 py-6'>No plans yet</p>`;return;}
+  let activePlans=Object.values(plans).filter(p=>p.active).sort((a,b)=>a.price-b.price);
+  el.innerHTML=activePlans.map(p=>{let total=p.dailyProfit*p.duration; return `<div class="glass rounded-[20px] p-5 border border-[#FFD700]/20"><div class="flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">${p.name}</h4><p class="text-white/40 text-[11px] mt-1">${p.description||''}</p></div><div class="text-right"><p class="text-[10px] text-white/40 uppercase">Price</p><p class="font-[800] text-[20px] text-[#FFD700]">Rs ${p.price}</p></div></div><div class="grid grid-cols-3 gap-2 mt-4"><div class="bg-black/30 rounded-xl p-3 text-center"><p class="text-[10px] text-white/40 uppercase">Daily</p><p class="font-bold text-[#00FF88] text-[14px]">Rs ${p.dailyProfit}</p></div><div class="bg-black/30 rounded-xl p-3 text-center"><p class="text-[10px] text-white/40 uppercase">Days</p><p class="font-bold text-[14px]">${p.duration}</p></div><div class="bg-black/30 rounded-xl p-3 text-center"><p class="text-[10px] text-white/40 uppercase">Total</p><p class="font-bold text-[#FFD700] text-[14px]">Rs ${total}</p></div></div><button onclick="buyPlan('${p.id}')" class="w-full mt-4 gradient-gold text-black rounded-xl py-3.5 font-[800] text-sm">Buy Plan → Rs ${p.price}</button></div>`;}).join('');
+}
+
 async function register(){let u=document.getElementById('username').value.trim();let p=document.getElementById('password').value.trim();if(!u||!p)return alert("Username / Password likho");document.getElementById('regBtn').innerText="Syncing...";let ex=await dbGet(`users/${u}`);if(ex){if(ex.pass!==btoa(p)){alert("Wrong Password!");document.getElementById('regBtn').innerText="Continue →";return;}}else{let id=Date.now().toString().slice(-6);let newUserData={pass:btoa(p),balance:50,refs:0,refEarnings:0,id:id,joined:new Date().toLocaleDateString(),myTeam:[],lastTasks:{},myPlans:{},referredBy:null,teamPlansCount:0};if(refId){let all=await dbGet(`users`);if(all){let rk=Object.keys(all).find(k=>all[k].id==refId);if(rk&&rk!==u){newUserData.referredBy=rk;let team=all[rk].myTeam||[];team.push({name:u,date:new Date().toLocaleDateString(),planAmount:0});await dbPatch(`users/${rk}`,{balance:all[rk].balance+25,refs:all[rk].refs+1,myTeam:team});}}}await dbSet(`users/${u}`,newUserData);}localStorage.setItem('taskup_current',u);currentUser=u;showMain();}
-async function showMain(){if(!currentUser)return;document.getElementById('loginPage').style.display="none";document.getElementById('mainPage').style.display="block";await loadTasksFromAdmin();await loadDepositAccounts();await loadPlans();let data=await dbGet(`users/${currentUser}`);if(!data)return;document.getElementById('userName').innerText=currentUser;document.getElementById('bal').innerText=data.balance;document.getElementById('statRefEarn').innerText=`Rs ${data.refEarnings||0}`;document.getElementById('statTeamPlans').innerText=data.teamPlansCount||0;document.getElementById('statPlans').innerText=data.myPlans?Object.keys(data.myPlans).length:0;document.getElementById('refLink').value=window.location.origin+window.location.pathname+"?ref="+data.id;document.getElementById('referredByInfo').innerText=data.referredBy?`Referred by: ${data.referredBy}`:'No referrer';renderTasks();renderHistory();}
+
+// FIXED SHOW MAIN - STATS AB SAHI SHOW HONGE
+async function showMain(){
+  if(!currentUser)return;
+  document.getElementById('loginPage').style.display="none";
+  document.getElementById('mainPage').style.display="block";
+  await loadTasksFromAdmin();
+  await loadDepositAccounts();
+  await loadPlans();
+
+  let data=await dbGet(`users/${currentUser}`);
+  if(!data)return;
+
+  // User info
+  document.getElementById('userName').innerText=currentUser;
+  document.getElementById('bal').innerText=data.balance||0;
+  document.getElementById('refLink').value=window.location.origin+window.location.pathname+"?ref="+data.id;
+  document.getElementById('referredByInfo').innerText=data.referredBy?`Referred by: ${data.referredBy}`:'No referrer • Share for 10%';
+
+  // FIXED: Fetch all stats correctly
+  await updateAllStats();
+
+  renderTasks();
+  renderHistory();
+}
+
+// NEW FUNCTION - STATS KO SAHI SE UPDATE KAREGA
+async function updateAllStats(){
+  let data=await dbGet(`users/${currentUser}`);
+  if(!data) return;
+
+  // 1. REF EARN - direct from user data + from my_referral_earnings
+  let refData=await dbGet(`my_referral_earnings/${currentUser}`)||{};
+  let totalRefEarn=Object.values(refData).reduce((s,r)=>s+(r.amount||0),0);
+  // Fallback to user.refEarnings if referral table empty
+  let refEarnValue = totalRefEarn>0? totalRefEarn : (data.refEarnings||0);
+  document.getElementById('statRefEarn').innerText=`Rs ${refEarnValue}`;
+
+  // 2. TEAM PLANS - count of team members who have active plans
+  let myPlans=await dbGet(`my_plans/${currentUser}`)||{};
+  let teamPlansCount=0;
+  let team=data.myTeam||[];
+  if(team.length>0){
+    for(let member of team){
+      let memberPlans=await dbGet(`my_plans/${member.name}`)||{};
+      let activeCount=Object.values(memberPlans).filter(p=>p.status==='Active'||p.status==='Completed').length;
+      teamPlansCount+=activeCount;
+    }
+  }
+  // Also use stored teamPlansCount if available
+  let finalTeamPlans = teamPlansCount>0? teamPlansCount : (data.teamPlansCount||0);
+  document.getElementById('statTeamPlans').innerText=`${finalTeamPlans}`;
+
+  // 3. ACTIVE PLANS - active + total
+  let allMyPlans=Object.values(myPlans);
+  let activePlans=allMyPlans.filter(p=>p.status==='Active').length;
+  let totalPlans=allMyPlans.length;
+  let pendingPlans=allMyPlans.filter(p=>p.status==='Pending').length;
+
+  document.getElementById('statPlans').innerText=`${activePlans} Active`;
+  document.getElementById('statPlansDetail').innerText=`${totalPlans} Total • ${pendingPlans} Pending`;
+}
+
 async function renderTasks(){
   let userData=await dbGet(`users/${currentUser}`); let lastTasks=userData.lastTasks||{}; let now=Date.now(); let myPlans=await dbGet(`my_plans/${currentUser}`)||{}; let activePlans=Object.values(myPlans).filter(p=>p.status==="Active");
   let html="";
@@ -114,20 +182,35 @@ async function renderTasks(){
       html+=`<div class="bg-gradient-to-br from-[#FFD700]/10 to-[#FF8C00]/10 border border-[#FFD700]/30 rounded-2xl p-4 flex justify-between items-center gap-3"><div class="flex gap-3 items-center min-w-0"><div class="w-12 h-12 bg-[#FFD700]/20 rounded-xl flex items-center justify-center text-xl shrink-0">📦</div><div class="min-w-0"><p class="font-bold text-[13px] truncate">${plan.planName} <span class="text-[10px] bg-[#00FF88]/20 text-[#00FF88] px-2 py-0.5 rounded-full ml-1">Day ${plan.claimedDays||0}/${plan.duration}</span></p><p class="text-[#00FF88] text-[11px] font-bold">+Rs ${plan.dailyProfit} daily • Earned Rs ${plan.totalEarned||0}</p><div class="mt-1.5 w-full bg-black/40 rounded-full h-1.5 overflow-hidden"><div class="h-full gradient-gold" style="width:${progress}%"></div></div></div></div><button onclick="claimDaily('${plan.id}')" ${canClaim?"":"disabled"} class="${btnClass} px-4 py-3 rounded-xl text-[11px] font-[800] shrink-0">${btnText}</button></div>`;
     }
     html+=`<div class="h-[1px] bg-white/10 my-3"></div>`;
+  } else {
+    html+=`<div class="bg-white/[0.03] border border-dashed border-white/10 rounded-2xl p-4 text-center"><p class="text-white/30 text-[11px]">No active plans yet<br><span class="text-[10px]">Plan buy karo to daily claim yahan ayega</span></p></div>`;
   }
-  html+=`<p class="text-[11px] text-white/40 uppercase tracking-widest">Other Daily Tasks</p>`;
+  html+=`<p class="text-[11px] text-white/40 uppercase tracking-widest mt-3">Other Daily Tasks</p>`;
   if(tasks.length==0) html+=`<p class='text-center text-white/30 py-4 text-[12px]'>No tasks from admin</p>`;
   tasks.forEach((t)=>{let last=lastTasks[t.id]||0; let diff=now-last; let oneDay=86400000; let can=diff>=oneDay; let btnText=can?"Claim":`${Math.floor((oneDay-(now-last))/3600000)}h`; let btnClass=can?"bg-gradient-to-r from-[#00D2FF] to-[#7A5CFF]":"bg-white/10 text-white/30"; let dis=can?"":"disabled"; html+=`<div class="bg-white/[0.05] border border-white/10 rounded-2xl p-4 flex justify-between items-center gap-2"><div class="flex gap-3 items-center"><div class="w-11 h-11 bg-white/[0.08] rounded-xl flex items-center justify-center">${t.icon||'🔥'}</div><div><p class="font-bold text-[13px]">${t.name}</p><p class="text-[#00FF88] text-[11px]">+Rs ${t.reward}</p></div></div><button onclick="doTask('${t.id}',${t.reward},'${t.link}')" ${dis} class="${btnClass} px-4 py-2.5 rounded-xl text-[11px] font-bold">${btnText}</button></div>`;});
   document.getElementById('tasksList').innerHTML=html;
 }
-async function doTask(id,rew,link){let userData=await dbGet(`users/${currentUser}`);let last=userData.lastTasks||{};if(last[id]&&Date.now()-last[id]<86400000)return alert("24h baad!");if(link)window.open(link,'_blank');last[id]=Date.now();await dbPatch(`users/${currentUser}`,{balance:userData.balance+rew,lastTasks:last});document.getElementById('bal').innerText=userData.balance+rew;renderTasks();}
+async function doTask(id,rew,link){let userData=await dbGet(`users/${currentUser}`);let last=userData.lastTasks||{};if(last[id]&&Date.now()-last[id]<86400000)return alert("24h baad!");if(link)window.open(link,'_blank');last[id]=Date.now();await dbPatch(`users/${currentUser}`,{balance:userData.balance+rew,lastTasks:last});document.getElementById('bal').innerText=userData.balance+rew;await updateAllStats();renderTasks();}
 function setPlanMethod(m){planMethod=m;['pEasy','pJazz'].forEach(id=>{document.getElementById(id).className="bg-white/10 border border-white/10 rounded-xl py-3 text-xs font-bold";});let id=m==='Easypaisa'?'pEasy':'pJazz';document.getElementById(id).className="bg-white text-black rounded-xl py-3 text-xs font-bold";}
 function buyPlan(planId){selectedPlan=allPlans[planId];if(!selectedPlan)return;document.getElementById('buyPlanName').innerText=`Buy ${selectedPlan.name}`;document.getElementById('buyPlanDesc').innerText=`Price Rs ${selectedPlan.price} • Daily Rs ${selectedPlan.dailyProfit} × ${selectedPlan.duration}`;document.getElementById('planBuyModal').classList.add('active');}
-async function confirmBuyPlan(){if(!selectedPlan)return;let txn=document.getElementById('planTxn').value.trim();let sender=document.getElementById('planSender').value.trim();if(!txn)return alert("Txn ID!");if(!sender)return alert("Number!");let pushId=await dbPush(`planPurchases`,{id:"",user:currentUser,planId:selectedPlan.id,planName:selectedPlan.name,amount:selectedPlan.price,dailyProfit:selectedPlan.dailyProfit,duration:selectedPlan.duration,method:planMethod,txn:txn,sender:sender,date:new Date().toLocaleString(),status:"Pending",referredBy:(await dbGet(`users/${currentUser}`)).referredBy||null});await dbPatch(`planPurchases/${pushId}`,{id:pushId});await dbSet(`my_plans/${currentUser}/${pushId}`,{id:pushId,planId:selectedPlan.id,planName:selectedPlan.name,amount:selectedPlan.price,dailyProfit:selectedPlan.dailyProfit,duration:selectedPlan.duration,method:planMethod,txn:txn,date:new Date().toLocaleString(),status:"Pending",claimedDays:0,totalEarned:0});document.getElementById('buyPlanMsg').innerHTML=`<span class="text-[#00FF88] bg-[#00FF88]/10 border border-[#00FF88]/20 px-4 py-3 rounded-xl block font-bold">✅ Pending! Admin approve karega.</span>`;setTimeout(()=>{document.getElementById('planBuyModal').classList.remove('active');renderTasks();renderHistory();},2000);}
-async function withdraw(){let amt=parseInt(document.getElementById('amount').value);let acc=document.getElementById('accNum').value.trim();let data=await dbGet(`users/${currentUser}`);if(data.balance<500)return alert("Min 500");if(!amt||amt<500||amt>data.balance)return alert("Invalid");if(!acc)return alert("Account!");await dbPatch(`users/${currentUser}`,{balance:data.balance-amt});let pushId=await dbPush(`withdraws`,{id:"",user:currentUser,amount:amt,account:acc,date:new Date().toLocaleString(),status:"Pending"});await dbPatch(`withdraws/${pushId}`,{id:pushId});await dbSet(`my_withdraws/${currentUser}/${pushId}`,{id:pushId,amount:amt,account:acc,date:new Date().toLocaleString(),status:"Pending"});document.getElementById('wMsg').innerHTML=`<span class="text-[#00FF88] bg-[#00FF88]/10 border border-[#00FF88]/20 px-4 py-3 rounded-xl block font-bold">✅ Rs ${amt} Pending</span>`;renderHistory();}
+async function confirmBuyPlan(){if(!selectedPlan)return;let txn=document.getElementById('planTxn').value.trim();let sender=document.getElementById('planSender').value.trim();if(!txn)return alert("Txn ID!");if(!sender)return alert("Number!");let pushId=await dbPush(`planPurchases`,{id:"",user:currentUser,planId:selectedPlan.id,planName:selectedPlan.name,amount:selectedPlan.price,dailyProfit:selectedPlan.dailyProfit,duration:selectedPlan.duration,method:planMethod,txn:txn,sender:sender,date:new Date().toLocaleString(),status:"Pending",referredBy:(await dbGet(`users/${currentUser}`)).referredBy||null});await dbPatch(`planPurchases/${pushId}`,{id:pushId});await dbSet(`my_plans/${currentUser}/${pushId}`,{id:pushId,planId:selectedPlan.id,planName:selectedPlan.name,amount:selectedPlan.price,dailyProfit:selectedPlan.dailyProfit,duration:selectedPlan.duration,method:planMethod,txn:txn,date:new Date().toLocaleString(),status:"Pending",claimedDays:0,totalEarned:0});document.getElementById('buyPlanMsg').innerHTML=`<span class="text-[#00FF88] bg-[#00FF88]/10 border border-[#00FF88]/20 px-4 py-3 rounded-xl block font-bold">✅ Pending! Admin approve karega.</span>`;setTimeout(()=>{document.getElementById('planBuyModal').classList.remove('active');updateAllStats();renderTasks();renderHistory();},2000);}
+async function withdraw(){let amt=parseInt(document.getElementById('amount').value);let acc=document.getElementById('accNum').value.trim();let data=await dbGet(`users/${currentUser}`);if(data.balance<500)return alert("Min 500");if(!amt||amt<500||amt>data.balance)return alert("Invalid");if(!acc)return alert("Account!");await dbPatch(`users/${currentUser}`,{balance:data.balance-amt});let pushId=await dbPush(`withdraws`,{id:"",user:currentUser,amount:amt,account:acc,date:new Date().toLocaleString(),status:"Pending"});await dbPatch(`withdraws/${pushId}`,{id:pushId});await dbSet(`my_withdraws/${currentUser}/${pushId}`,{id:pushId,amount:amt,account:acc,date:new Date().toLocaleString(),status:"Pending"});document.getElementById('wMsg').innerHTML=`<span class="text-[#00FF88] bg-[#00FF88]/10 border border-[#00FF88]/20 px-4 py-3 rounded-xl block font-bold">✅ Rs ${amt} Pending</span>`;await updateAllStats();renderHistory();}
 async function renderHistory(){let el=document.getElementById('historyList'); el.innerHTML="<p class='text-center text-white/30 py-6'>Loading...</p>"; let wData=await dbGet(`my_withdraws/${currentUser}`)||{}; let pData=await dbGet(`my_plans/${currentUser}`)||{}; let rData=await dbGet(`my_referral_earnings/${currentUser}`)||{}; let combined=[]; Object.values(wData).forEach(v=>combined.push({...v, type:'withdraw'})); Object.values(pData).forEach(v=>combined.push({...v, type:'plan'})); Object.values(rData).forEach(v=>combined.push({...v, type:'referral'})); combined.sort((a,b)=>new Date(b.date)-new Date(a.date)); if(combined.length==0){el.innerHTML="<p class='text-center text-white/30 py-8'>No history</p>";return;} el.innerHTML=combined.map(item=>{if(item.type==='referral') return `<div class="bg-[#FFD700]/10 border border-[#FFD700]/20 rounded-xl p-4 flex justify-between items-center"><div><p class="font-bold text-sm">Rs ${item.amount} • 10% Referral</p><p class="text-white/40 text-[11px]">${item.date} • From ${item.fromUser}</p></div><span class="bg-[#FFD700]/20 text-[#FFD700] px-3 py-1 rounded-full text-[10px] font-bold">BONUS</span></div>`; if(item.type==='withdraw'){let color=item.status=="Pending"?"bg-yellow-500/15 text-yellow-400":"bg-[#00FF88]/15 text-[#00FF88]";return `<div class="bg-white/[0.04] border border-white/5 rounded-xl p-4 flex justify-between items-center"><div><p class="font-bold text-sm">Rs ${item.amount} • Withdraw</p><p class="text-white/40 text-[11px]">${item.date}</p></div><span class="${color} px-3 py-1 rounded-full text-[10px] font-bold">${item.status}</span></div>`;} let color=item.status=="Pending"?"bg-yellow-500/15 text-yellow-400":item.status=="Active"?"bg-[#00FF88]/15 text-[#00FF88]":"bg-[#FFD700]/15 text-[#FFD700]";return `<div class="bg-white/[0.04] border border-white/5 rounded-xl p-4"><div class="flex justify-between gap-2"><div><p class="font-bold text-sm">${item.planName} • Rs ${item.amount} • ${item.method}</p><p class="text-white/40 text-[11px]">Daily Rs ${item.dailyProfit} • Earned Rs ${item.totalEarned||0}</p></div><span class="${color} border px-3 py-1 rounded-full text-[10px] font-bold h-fit">${item.status}</span></div></div>`;}).join('');}
-async function claimDaily(planPurchaseId){let plan=await dbGet(`my_plans/${currentUser}/${planPurchaseId}`);if(!plan||plan.status!=="Active")return alert("Not active!");let lastClaim=plan.lastClaim||0;let now=Date.now();if(now-lastClaim<86400000&&plan.claimedDays>0){let rem=86400000-(now-lastClaim);return alert(`Already claimed! ${Math.floor(rem/3600000)}h left`);}let userData=await dbGet(`users/${currentUser}`);let newClaimed=(plan.claimedDays||0)+1;let newEarned=(plan.totalEarned||0)+plan.dailyProfit;let newStatus=newClaimed>=plan.duration?"Completed":"Active";await dbPatch(`my_plans/${currentUser}/${planPurchaseId}`,{claimedDays:newClaimed,totalEarned:newEarned,lastClaim:now,status:newStatus});await dbPatch(`users/${currentUser}`,{balance:userData.balance+plan.dailyProfit});document.getElementById('bal').innerText=userData.balance+plan.dailyProfit;alert(`✅ Rs ${plan.dailyProfit} claimed! Day ${newClaimed}/${plan.duration}`);renderTasks();renderHistory();}
-async function openMyPlans(){document.getElementById('myPlansModal').classList.add('active');let data=await dbGet(`my_plans/${currentUser}`);let el=document.getElementById('myPlansList');if(!data){el.innerHTML="<p class='text-white/30 text-center py-8'>No plans</p>";return;}let arr=Object.values(data).reverse();el.innerHTML=arr.map(p=>`<div class="bg-white/[0.05] border border-white/10 rounded-2xl p-4"><div class="flex justify-between items-center"><b class="text-sm">${p.planName}</b><span class="bg-white/10 border px-3 py-1 rounded-full text-[10px] font-bold">${p.status}</span></div><p class="text-[12px] text-white/50 mt-2">Rs ${p.amount} • Daily Rs ${p.dailyProfit} × ${p.duration}</p></div>`).join('');}
+async function claimDaily(planPurchaseId){
+  let plan=await dbGet(`my_plans/${currentUser}/${planPurchaseId}`);
+  if(!plan||plan.status!=="Active")return alert("Plan not active!");
+  let lastClaim=plan.lastClaim||0; let now=Date.now();
+  if(now-lastClaim<86400000&&plan.claimedDays>0){let rem=86400000-(now-lastClaim);return alert(`Already claimed! ${Math.floor(rem/3600000)}h left`);}
+  let userData=await dbGet(`users/${currentUser}`);
+  let newClaimed=(plan.claimedDays||0)+1; let newEarned=(plan.totalEarned||0)+plan.dailyProfit; let newStatus=newClaimed>=plan.duration?"Completed":"Active";
+  await dbPatch(`my_plans/${currentUser}/${planPurchaseId}`,{claimedDays:newClaimed,totalEarned:newEarned,lastClaim:now,status:newStatus});
+  await dbPatch(`users/${currentUser}`,{balance:userData.balance+plan.dailyProfit});
+  document.getElementById('bal').innerText=userData.balance+plan.dailyProfit;
+  alert(`✅ Rs ${plan.dailyProfit} claimed! Day ${newClaimed}/${plan.duration}`);
+  await updateAllStats();
+  renderTasks(); renderHistory();
+}
+async function openMyPlans(){document.getElementById('myPlansModal').classList.add('active');let data=await dbGet(`my_plans/${currentUser}`);let el=document.getElementById('myPlansList');if(!data){el.innerHTML="<p class='text-white/30 text-center py-8'>No plans</p>";return;}let arr=Object.values(data).reverse();el.innerHTML=arr.map(p=>{let color=p.status=="Pending"?"bg-yellow-500/15 text-yellow-400":p.status=="Active"?"bg-[#00FF88]/15 text-[#00FF88]":"bg-[#FFD700]/15 text-[#FFD700]";return `<div class="bg-white/[0.05] border border-white/10 rounded-2xl p-4"><div class="flex justify-between items-center"><b class="text-sm">${p.planName}</b><span class="${color} border px-3 py-1 rounded-full text-[10px] font-bold">${p.status}</span></div><p class="text-[12px] text-white/50 mt-2">Rs ${p.amount} • Daily Rs ${p.dailyProfit} × ${p.duration} • ${p.method}</p><p class="text-[11px] text-[#FFD700] mt-1">Earned: Rs ${p.totalEarned||0} • ${p.claimedDays||0}/${p.duration}</p></div>`;}).join('');}
 async function openTeam(){document.getElementById('teamModal').classList.add('active');let data=await dbGet(`users/${currentUser}`);let team=data.myTeam||[];let refData=await dbGet(`my_referral_earnings/${currentUser}`)||{};let totalRefEarn=Object.values(refData).reduce((s,r)=>s+r.amount,0);document.getElementById('teamList').innerHTML=team.length==0?"<p class='text-white/30 text-center py-8'>No team yet</p>":team.map(m=>`<div class="bg-white/[0.05] rounded-xl p-4 flex justify-between items-center"><div><p class="font-bold text-sm">${m.name}</p><p class="text-white/40 text-[11px]">${m.date}</p></div><span class="text-[#00FF88] text-xs font-bold">+Rs 25 + 10%</span></div>`).join('');document.getElementById('teamEarnings').innerHTML=`<div class="grid grid-cols-2 gap-3"><div class="bg-black/30 rounded-xl p-3 text-center"><p class="text-[10px] text-white/40 uppercase">Total Ref Earn</p><p class="font-bold text-[#FFD700] text-[16px]">Rs ${totalRefEarn}</p></div><div class="bg-black/30 rounded-xl p-3 text-center"><p class="text-[10px] text-white/40 uppercase">Members</p><p class="font-bold text-[#00FF88] text-[16px]">${team.length}</p></div></div>`;}
 function copyRef(){navigator.clipboard.writeText(document.getElementById('refLink').value);alert("Copied!");}
 function logout(){localStorage.removeItem('taskup_current');location.reload();}
