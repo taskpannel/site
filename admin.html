@@ -2,150 +2,262 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Task Price Control</title>
+<title>Admin - Full Control</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>body{background:#07080F;color:white}.glass{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.12)}.gradient-btn{background:linear-gradient(135deg,#00D2FF,#7A5CFF,#FF3BD4)}.blur-ball{position:fixed;width:500px;height:500px;filter:blur(120px);border-radius:50%;z-index:-1;opacity:0.4}</style>
+<style>body{background:#07080F;color:white}.glass{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.12)}.gradient-gold{background:linear-gradient(135deg,#FFD700,#FF8C00)}.modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);backdrop-filter:blur(15px);z-index:99;display:none;align-items:center;justify-content:center;padding:12px}.modal.active{display:flex}</style>
 </head>
-<body class="p-4 max-w-[1250px] mx-auto relative">
-<div class="blur-ball bg-[#7A5CFF] top-[-10%] left-[-10%]"></div>
-<div id="lock" class="min-h-[90vh] flex items-center justify-center"><div class="glass rounded-[32px] p-8 w-full max-w-[400px] text-center"><div class="w-16 h-16 gradient-btn rounded-[16px] flex items-center justify-center mx-auto text-2xl">🔐</div><h2 class="text-2xl font-bold mt-4">Admin Price Control</h2><input id="pass" type="password" placeholder="Password" class="w-full mt-6 bg-white/[0.06] border border-white/10 rounded-xl px-5 py-4 outline-none"><button onclick="login()" class="gradient-btn w-full rounded-xl py-4 font-bold mt-4">Unlock →</button></div></div>
+<body class="p-4 max-w-[1350px] mx-auto">
+<div id="lock" class="min-h-[90vh] flex items-center justify-center"><div class="glass rounded-[32px] p-8 w-full max-w-[400px] text-center"><div class="w-16 h-16 gradient-gold rounded-[16px] flex items-center justify-center mx-auto text-2xl">💎</div><h2 class="text-2xl font-bold mt-4">Full Admin Panel</h2><p class="text-white/40 text-xs mt-1">Chat + Withdraw + Plans + Delete User</p><input id="pass" type="password" placeholder="Password" class="w-full mt-6 bg-white/[0.06] border border-white/10 rounded-xl px-5 py-4 outline-none"><button onclick="login()" class="gradient-gold w-full rounded-xl py-4 font-bold mt-4 text-black">Unlock →</button></div></div>
 
 <div id="panel" style="display:none" class="space-y-5 pb-20">
-  <div class="flex justify-between items-center"><h1 class="text-2xl font-bold">Dashboard • taskup13</h1><button onclick="loadAll();loadTasks();loadPromos()" class="bg-white/10 px-5 py-2.5 rounded-full text-xs font-bold">🔄 Refresh</button></div>
+  <div class="flex flex-col sm:flex-row justify-between gap-3"><h1 class="text-2xl font-bold">Admin Dashboard - Full Control</h1><button onclick="loadAll();loadPlans();loadPlanPurchases();loadWithdraws();loadChatsList()" class="bg-white/10 px-5 py-2.5 rounded-full text-xs font-bold">🔄 Refresh All</button></div>
 
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-    <div class="glass rounded-2xl p-5"><p class="text-white/40 text-[10px]">USERS</p><h2 class="text-3xl font-bold" id="totalUsers">0</h2></div>
-    <div class="glass rounded-2xl p-5"><p class="text-white/40 text-[10px]">PENDING</p><h2 class="text-3xl font-bold" id="totalW">0</h2></div>
-    <div class="glass rounded-2xl p-5"><p class="text-white/40 text-[10px]">PAID</p><h2 class="text-2xl font-bold">Rs <span id="totalPaid">0</span></h2></div>
-    <div class="glass rounded-2xl p-5 border border-[#00D2FF]/30"><p class="text-white/40 text-[10px]">TASKS</p><h2 class="text-3xl font-bold text-[#00D2FF]" id="totalTasks">0</h2><p class="text-[10px] text-white/30 mt-1">Price Editable ✅</p></div>
+  <div class="grid grid-cols-2 lg:grid-cols-6 gap-3">
+    <div class="glass rounded-2xl p-4"><p class="text-white/40 text-[10px]">USERS</p><h2 class="text-2xl font-bold" id="totalUsers">0</h2></div>
+    <div class="glass rounded-2xl p-4 border border-yellow-500/20"><p class="text-white/40 text-[10px]">Withdraw Pending</p><h2 class="text-2xl font-bold text-yellow-400" id="totalW">0</h2></div>
+    <div class="glass rounded-2xl p-4 border border-[#FFD700]/30"><p class="text-white/40 text-[10px]">Plan Pending</p><h2 class="text-2xl font-bold text-[#FFD700]" id="totalPlanPending">0</h2></div>
+    <div class="glass rounded-2xl p-4 border border-[#00D2FF]/30"><p class="text-white/40 text-[10px]">Chat Messages</p><h2 class="text-2xl font-bold text-[#00D2FF]" id="totalChats">0</h2></div>
+    <div class="glass rounded-2xl p-4 border border-[#FFD700]/30"><p class="text-white/40 text-[10px]">10% Ref Paid</p><h2 class="text-xl font-bold text-[#FFD700]">Rs <span id="totalReferralPaid">0</span></h2></div>
+    <div class="glass rounded-2xl p-4"><p class="text-white/40 text-[10px]">Plans Sold</p><h2 class="text-2xl font-bold text-[#FFD700]" id="totalPlansSold">0</h2></div>
   </div>
 
-  <!-- TASK MANAGER WITH PRICE EDIT - ULTRA -->
-  <div class="glass rounded-[24px] p-6 border border-[#00D2FF]/40">
-    <div class="flex justify-between items-start gap-3"><div><h3 class="font-bold text-[17px]">🔥 Task Manager - Price & Link Control</h3><p class="text-white/40 text-xs mt-1">Task ki price, naam, link sab yahan se change karo - User app pe live update</p></div><span class="bg-[#00D2FF]/20 text-[#00D2FF] border border-[#00D2FF]/20 px-3 py-1 rounded-full text-[10px] font-bold shrink-0">LIVE EDIT</span></div>
+  <!-- PAYMENT ACCOUNTS -->
+  <div class="glass rounded-[24px] p-6 border border-[#00FF88]/30"><h3 class="font-bold">💰 Payment Accounts - Easypaisa / JazzCash Only</h3><div class="grid md:grid-cols-3 gap-3 mt-4"><input id="setEasy" placeholder="Easypaisa Number" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm"><input id="setJazz" placeholder="JazzCash Number" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm"><button onclick="saveDepositAccounts()" class="bg-[#00FF88]/20 text-[#00FF88] border border-[#00FF88]/30 rounded-xl py-3.5 font-bold text-sm">Save Accounts</button></div></div>
 
-    <div class="grid md:grid-cols-5 gap-3 mt-6 bg-black/20 p-4 rounded-2xl border border-white/5">
-      <input id="taskName" placeholder="Task Name" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-[#00D2FF] md:col-span-2">
-      <input id="taskReward" type="number" placeholder="Price Rs" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-[#00FF88] font-bold">
-      <input id="taskLink" placeholder="https:// link" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-white/20">
-      <div class="flex gap-2"><input id="taskIcon" placeholder="✈️" class="w-[65px] bg-black/40 border border-white/10 rounded-xl px-2 py-3.5 text-sm text-center"><button onclick="createTask()" class="flex-1 bg-[#00D2FF] text-black rounded-xl py-3.5 font-bold text-sm hover:bg-[#00c0eb]">+ Add</button></div>
+  <!-- PLAN PURCHASE REQUESTS - FIXED -->
+  <div class="glass rounded-[24px] p-6 border border-[#FFD700]/40">
+    <div class="flex justify-between items-center"><h3 class="font-bold text-[16px]">📦 Plan Activation Requests - 10% Referral Auto</h3><span class="bg-[#FFD700]/20 text-[#FFD700] border border-[#FFD700]/20 px-3 py-1 rounded-full text-[10px] font-bold">Approve = 10% Commission</span></div>
+    <p class="text-white/40 text-xs mt-1">User ne plan kharida hai, Txn check karo aur Approve karo</p>
+    <div id="planPurchaseTable" class="mt-5 space-y-3"></div>
+  </div>
+
+  <!-- WITHDRAW REQUESTS - FIXED -->
+  <div class="glass rounded-[24px] p-6 border border-yellow-500/30">
+    <div class="flex justify-between items-center"><h3 class="font-bold text-[16px]">💸 Withdraw Requests</h3><span class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-[10px] font-bold">Pending</span></div>
+    <p class="text-white/40 text-xs mt-1">User ne withdraw request ki hai, account check karke Approve karo</p>
+    <div id="withdrawTable" class="mt-5 space-y-3"></div>
+  </div>
+
+  <!-- CHAT SYSTEM - RE-ADDED -->
+  <div class="glass rounded-[24px] p-6 border border-[#00D2FF]/30">
+    <div class="flex justify-between items-center"><h3 class="font-bold text-[16px]">💬 User Chats - Support System</h3><span class="bg-[#00D2FF]/20 text-[#00D2FF] px-3 py-1 rounded-full text-[10px] font-bold">Live Chat</span></div>
+    <p class="text-white/40 text-xs mt-1">User aur Admin ke darmian direct chat - Yahan se reply karo</p>
+    <div class="grid md:grid-cols-3 gap-4 mt-5">
+      <div class="bg-black/20 rounded-2xl p-4 border border-white/5">
+        <p class="text-[11px] text-white/40 uppercase">Users with Messages</p>
+        <div id="chatUsersList" class="mt-3 space-y-2 max-h-[400px] overflow-y-auto"></div>
+      </div>
+      <div class="md:col-span-2 bg-black/20 rounded-2xl border border-white/5 flex flex-col h-[400px]">
+        <div class="p-4 border-b border-white/10 flex justify-between items-center"><div><p class="font-bold text-sm" id="currentChatUser">Select a user</p><p class="text-white/40 text-[11px]">Chat history</p></div><button onclick="document.getElementById('currentChatUser').innerText='Select a user';document.getElementById('adminChatMessages').innerHTML='<p class=text-white/30 text-center py-10>Select user to view chat</p>'" class="bg-white/10 px-3 py-1 rounded-full text-xs">Clear</button></div>
+        <div id="adminChatMessages" class="flex-1 overflow-y-auto p-4 space-y-3"><p class="text-white/30 text-center py-10">Select a user from left to view chat</p></div>
+        <div class="p-3 border-t border-white/10 flex gap-2"><input id="adminChatInput" placeholder="Type reply..." class="flex-1 bg-white/[0.06] border border-white/10 rounded-xl px-4 py-3 text-sm outline-none"><button onclick="sendAdminMessage()" class="bg-[#00D2FF] text-black px-5 rounded-xl font-bold text-sm">Reply</button></div>
+      </div>
     </div>
-
-    <div id="taskList" class="mt-6 space-y-3"></div>
   </div>
 
-  <div class="glass rounded-[24px] p-6 border border-[#FF3BD4]/30">
-    <h3 class="font-bold">🎁 Promo Codes</h3>
-    <div class="grid md:grid-cols-4 gap-3 mt-4">
-      <input id="promoCode" placeholder="CODE" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm uppercase">
-      <input id="promoReward" type="number" placeholder="Reward Rs" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm">
-      <input id="promoMax" type="number" placeholder="Max Uses" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm">
-      <button onclick="createPromo()" class="bg-[#FF3BD4] rounded-xl py-3.5 font-bold text-sm">+ Create</button>
-    </div>
-    <div id="promoList" class="mt-5 space-y-2"></div>
+  <!-- PLANS MANAGER -->
+  <div class="glass rounded-[24px] p-6 border border-[#FFD700]/40">
+    <h3 class="font-bold">💎 Plans Manager</h3>
+    <div class="grid md:grid-cols-5 gap-3 mt-4 bg-black/20 p-4 rounded-2xl border border-white/5"><input id="planName" placeholder="Plan Name" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm md:col-span-2"><input id="planPrice" type="number" placeholder="Price Rs" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm font-bold"><input id="planDaily" type="number" placeholder="Daily Rs" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm"><input id="planDays" type="number" placeholder="Days" class="bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm"><div class="flex gap-2"><input id="planDesc" placeholder="Desc" class="flex-1 bg-black/40 border border-white/10 rounded-xl px-3 py-3.5 text-xs"><button onclick="createPlan()" class="bg-[#FFD700] text-black rounded-xl px-5 py-3.5 font-bold text-sm">+ Create</button></div></div>
+    <div id="plansList" class="mt-5 grid md:grid-cols-2 gap-3"></div>
   </div>
 
-  <div class="glass rounded-[24px] p-6"><div class="flex justify-between"><h3 class="font-bold">👥 Users</h3><input id="searchUser" onkeyup="renderUsers()" placeholder="Search..." class="bg-white/[0.06] border border-white/10 rounded-full px-4 py-2 text-xs"></div><div id="usersTable" class="mt-4 space-y-2"></div></div>
-  <div class="glass rounded-[24px] p-6 border border-yellow-500/20"><h3 class="font-bold">💸 Withdraws</h3><div id="wTable" class="mt-4 space-y-3"></div></div>
+  <!-- USERS WITH DELETE OPTION - NEW -->
+  <div class="glass rounded-[24px] p-6">
+    <div class="flex justify-between items-center"><h3 class="font-bold">👥 Users Management - Delete Option Added</h3><span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-[10px] font-bold">Delete User</span></div>
+    <p class="text-white/40 text-xs mt-1">User ka balance edit karo, delete karo, ya details dekho</p>
+    <input id="searchUser" onkeyup="renderUsers()" placeholder="Search user..." class="w-full mt-4 bg-white/[0.06] border border-white/10 rounded-full px-4 py-2.5 text-xs outline-none">
+    <div id="usersTable" class="mt-4 space-y-2 max-h-[600px] overflow-y-auto"></div>
+  </div>
 </div>
 
+<!-- Admin Chat Modal -->
+<div id="userDetailModal" class="modal" onclick="this.classList.remove('active')"><div class="glass rounded-[28px] p-6 w-full max-w-[420px]" onclick="event.stopPropagation()"><div class="flex justify-between items-center"><h3 class="font-bold" id="detailUserName">User Details</h3><button onclick="document.getElementById('userDetailModal').classList.remove('active')" class="bg-white/10 w-9 h-9 rounded-full">✕</button></div><div id="userDetailContent" class="mt-5 space-y-3"></div></div></div>
+
 <script>
-const DB_URL="https://taskup13-default-rtdb.firebaseio.com"; const ADMIN_PASS="Husnain123a786"; let allUsersData={};
+const DB_URL="https://taskup13-default-rtdb.firebaseio.com"; const ADMIN_PASS="Husnain123a786"; let allUsersData={}; let currentChatUserName=null;
+
 async function dbGet(p){let r=await fetch(`${DB_URL}/${p}.json`);return await r.json();}
 async function dbPatch(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PATCH',body:JSON.stringify(d)});}
 async function dbDelete(p){await fetch(`${DB_URL}/${p}.json`,{method:'DELETE'});}
 async function dbSet(p,d){await fetch(`${DB_URL}/${p}.json`,{method:'PUT',body:JSON.stringify(d)});}
-function login(){if(document.getElementById('pass').value===ADMIN_PASS){document.getElementById('lock').style.display='none';document.getElementById('panel').style.display='block';loadAll();loadTasks();loadPromos();}else alert("Wrong!");}
-async function loadAll(){let users=await dbGet(`users`);allUsersData=users||{};document.getElementById('totalUsers').innerText=users?Object.keys(users).length:0;renderUsers();let w=await dbGet(`withdraws`);document.getElementById('totalW').innerText=w?Object.keys(w).length:0;let html="";if(!w)html="<p class='text-center py-6 text-white/30'>No pending</p>";else{Object.values(w).reverse().forEach(req=>{html+=`<div class="bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex flex-col md:flex-row justify-between gap-3"><div><b>${req.user}</b> - <span class="text-[#00FF88] font-bold">Rs ${req.amount}</span><br><span class="text-xs bg-white/10 px-2 py-1 rounded-full">${req.account}</span></div><div class="flex gap-2"><button onclick="approveW('${req.id}')" class="bg-[#00FF88]/20 text-[#00FF88] px-4 py-2 rounded-full text-xs font-bold">Approve</button><button onclick="rejectW('${req.id}')" class="bg-[#FF3B30]/20 text-[#FF3B30] px-4 py-2 rounded-full text-xs">Reject</button></div></div>`;});}document.getElementById('wTable').innerHTML=html;let paid=await dbGet(`total_paid`);document.getElementById('totalPaid').innerText=paid||0;}
-function renderUsers(){let search=(document.getElementById('searchUser').value||"").toLowerCase();let html="";for(let u in allUsersData){if(search&&!u.toLowerCase().includes(search))continue;html+=`<div class="bg-white/[0.04] border border-white/10 rounded-xl p-3 flex justify-between items-center"><div><b>${u}</b> - Rs ${allUsersData[u].balance} | Refs ${allUsersData[u].refs}</div><div class="flex gap-1"><button onclick="editBal('${u}')" class="bg-white/10 px-3 py-1 rounded-full text-xs">Bal</button><button onclick="deleteUser('${u}')" class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-xs">Del</button></div></div>`;}document.getElementById('usersTable').innerHTML=html;}
+async function dbPush(p,d){let r=await fetch(`${DB_URL}/${p}.json`,{method:'POST',body:JSON.stringify(d)});let j=await r.json();return j.name;}
 
-// ===== TASK MANAGER WITH PRICE CHANGE =====
-async function createTask(){
-  let name=document.getElementById('taskName').value.trim();
-  let reward=parseInt(document.getElementById('taskReward').value);
-  let link=document.getElementById('taskLink').value.trim();
-  let icon=document.getElementById('taskIcon').value.trim()||"🔥";
-  if(!name||!reward) return alert("Name & Price likho!");
-  let id="task_"+Date.now();
-  await dbSet(`tasks/${id}`, {id:id, name:name, reward:reward, link:link, icon:icon, active:true, createdAt:new Date().toLocaleString()});
-  alert(`✅ Task "${name}" Rs ${reward} added!`);
-  document.getElementById('taskName').value="";document.getElementById('taskReward').value="";document.getElementById('taskLink').value="";document.getElementById('taskIcon').value="";
-  loadTasks();
+function login(){if(document.getElementById('pass').value===ADMIN_PASS){document.getElementById('lock').style.display='none';document.getElementById('panel').style.display='block';loadAll();loadPlans();loadPlanPurchases();loadWithdraws();loadChatsList();}else alert("Wrong!");}
+
+async function loadAll(){
+  let users=await dbGet(`users`); allUsersData=users||{};
+  document.getElementById('totalUsers').innerText=users?Object.keys(users).length:0;
+  renderUsers();
+  let w=await dbGet(`withdraws`); document.getElementById('totalW').innerText=w?Object.keys(w).length:0;
+  let pp=await dbGet(`planPurchases`); document.getElementById('totalPlanPending').innerText=pp?Object.keys(pp).length:0;
+  document.getElementById('totalReferralPaid').innerText=await dbGet(`total_referral_paid`)||0;
+  document.getElementById('totalPlansSold').innerText=await dbGet(`total_plans_sold`)||0;
+  let allChats=await dbGet(`chats`); document.getElementById('totalChats').innerText=allChats?Object.keys(allChats).length:0;
 }
 
-async function loadTasks(){
-  let tasks=await dbGet(`tasks`);
-  let el=document.getElementById('taskList');
-  document.getElementById('totalTasks').innerText=tasks?Object.keys(tasks).length:0;
-  if(!tasks){el.innerHTML="<p class='text-white/30 text-sm bg-white/[0.02] border border-dashed border-white/10 rounded-xl p-6 text-center'>No tasks yet. User app khulne pe 4 default tasks auto ban jayenge. Aap yahan se price change kar sakte ho.</p>";return;}
-  let html="";
-  for(let key in tasks){
-    let t=tasks[key];
-    html+=`
-    <div class="bg-[#00D2FF]/[0.06] border ${t.active?'border-[#00D2FF]/20':'border-red-500/20'} rounded-2xl p-4">
-      <div class="flex flex-col lg:flex-row justify-between gap-4">
-        <div class="flex gap-3 items-start min-w-0 flex-1">
-          <div class="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center text-lg shrink-0">${t.icon}</div>
-          <div class="min-w-0 flex-1">
-            <p class="font-bold text-[14px] truncate">${t.name}</p>
-            <p class="text-[11px] text-white/40 mt-1 truncate"><span class="text-[#00D2FF]">${t.link||'No link'}</span> • ${t.createdAt||''}</p>
-            <div class="flex items-center gap-2 mt-2">
-              <span class="text-[10px] bg-black/30 border border-white/10 px-2.5 py-1 rounded-full">ID: ${t.id.slice(0,12)}...</span>
-              <span class="text-[10px] px-2.5 py-1 rounded-full ${t.active?'bg-[#00FF88]/15 text-[#00FF88] border border-[#00FF88]/20':'bg-red-500/15 text-red-400 border border-red-500/20'}">${t.active?'● ACTIVE':'● DISABLED'}</span>
-            </div>
-          </div>
-        </div>
+async function saveDepositAccounts(){let easy=document.getElementById('setEasy').value.trim();let jazz=document.getElementById('setJazz').value.trim();if(!easy||!jazz)return alert("Both numbers likho!");await dbSet(`depositAccounts`,{easypaisa:easy,jazzcash:jazz});alert("Saved!");}
 
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 lg:w-[420px]">
-          <!-- PRICE EDITOR -->
-          <div class="flex items-center gap-2 bg-black/30 border border-[#00FF88]/20 rounded-xl px-3 py-2 flex-1">
-            <span class="text-[#00FF88] text-xs font-bold">Rs</span>
-            <input id="price_${key}" type="number" value="${t.reward}" class="bg-transparent w-full outline-none text-white font-bold text-[15px]">
-            <button onclick="updatePrice('${key}')" class="bg-[#00FF88]/20 text-[#00FF88] border border-[#00FF88]/30 px-3 py-1.5 rounded-full text-[11px] font-bold hover:bg-[#00FF88]/30 shrink-0">Save Price</button>
-          </div>
+// PLANS
+async function createPlan(){let name=document.getElementById('planName').value.trim();let price=parseInt(document.getElementById('planPrice').value);let daily=parseInt(document.getElementById('planDaily').value);let days=parseInt(document.getElementById('planDays').value);let desc=document.getElementById('planDesc').value.trim();if(!name||!price||!daily||!days)return alert("All fields!");let id="plan_"+Date.now();await dbSet(`depositPlans/${id}`, {id:id, name:name, price:price, dailyProfit:daily, duration:days, description:desc, active:true, isHot:false});alert(`✅ Plan ${name} Rs ${price} created!`);loadPlans();}
+async function loadPlans(){let plans=await dbGet(`depositPlans`);let el=document.getElementById('plansList');if(!plans){el.innerHTML="<p class='text-white/30 text-sm text-center py-6'>No plans</p>";return;}let html="";for(let key in plans){let p=plans[key];html+=`<div class="bg-[#FFD700]/[0.07] border ${p.active?'border-[#FFD700]/20':'border-red-500/20'} rounded-2xl p-4"><div class="flex justify-between gap-3"><div><b class="text-sm">${p.name} ${p.isHot?'🔥':''}</b><br><span class="text-[11px] text-white/40">${p.description||''}</span><br><span class="text-[10px] ${p.active?'text-[#00FF88]':'text-red-400'}">${p.active?'ACTIVE':'DISABLED'}</span></div><div class="text-right"><p class="font-bold text-[#FFD700]">Rs ${p.price}</p><p class="text-xs">Daily Rs ${p.dailyProfit} × ${p.duration}</p></div></div><div class="mt-3 flex gap-2"><button onclick="togglePlan('${key}')" class="flex-1 bg-yellow-500/15 text-yellow-400 rounded-xl py-2 text-xs">${p.active?'Off':'On'}</button><button onclick="deletePlan('${key}')" class="flex-1 bg-red-500/15 text-red-400 rounded-xl py-2 text-xs">Del</button></div></div>`;}el.innerHTML=html;}
+async function togglePlan(id){let p=await dbGet(`depositPlans/${id}`);await dbPatch(`depositPlans/${id}`,{active:!p.active});loadPlans();}
+async function deletePlan(id){if(confirm("Delete plan?")){await dbDelete(`depositPlans/${id}`);loadPlans();}}
 
-          <div class="flex gap-1.5">
-            <button onclick="editTaskFull('${key}')" class="bg-white/10 hover:bg-white/15 border border-white/10 px-3 py-2.5 rounded-xl text-xs font-bold">✏️ Edit</button>
-            <button onclick="toggleTask('${key}')" class="bg-yellow-500/15 hover:bg-yellow-500/25 text-yellow-400 border border-yellow-500/20 px-3 py-2.5 rounded-xl text-xs font-bold">${t.active?'Off':'On'}</button>
-            <button onclick="deleteTask('${key}')" class="bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/20 px-3 py-2.5 rounded-xl text-xs font-bold">🗑️</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
+// PLAN PURCHASES - SHOWING NOW
+async function loadPlanPurchases(){
+  let purchases=await dbGet(`planPurchases`);
+  let el=document.getElementById('planPurchaseTable');
+  if(!purchases){el.innerHTML="<div class='text-center py-10'><p class='text-3xl'>📭</p><p class='text-white/30 text-sm mt-2'>No pending plan activation requests<br><span class='text-xs'>User plan kharidega to yahan ayega</span></p></div>";return;}
+  let html=""; for(let id in purchases){
+    let p=purchases[id];
+    let commission=Math.floor(p.amount*0.10);
+    html+=`<div class="bg-[#FFD700]/[0.06] border border-[#FFD700]/20 rounded-2xl p-4 flex flex-col md:flex-row justify-between gap-3"><div><div class="flex flex-wrap items-center gap-2"><b class="text-sm">${p.user}</b><span class="bg-[#FFD700]/15 text-[#FFD700] border border-[#FFD700]/20 px-2.5 py-1 rounded-full text-[11px] font-bold">${p.planName} • Rs ${p.amount}</span><span class="bg-white/10 px-2.5 py-1 rounded-full text-[10px]">${p.method} • Txn ${p.txn}</span></div><div class="mt-2 text-[12px]"><p><span class="text-white/40">Referred By:</span> <b class="text-[#FFD700]">${p.referredBy||'No referrer'}</b> → <span class="text-[#00FF88]">10% Commission: Rs ${commission}</span></p><p class="text-white/30 text-[11px]">${p.date} • Sender: ${p.sender} • Number: ${p.sender}</p></div></div><div class="flex gap-2 shrink-0"><button onclick="approvePlanPurchase('${p.id}')" class="bg-[#00FF88]/20 text-[#00FF88] border border-[#00FF88]/30 px-5 py-2.5 rounded-full text-xs font-bold">✓ Approve + 10%</button><button onclick="rejectPlanPurchase('${p.id}')" class="bg-red-500/15 text-red-400 border border-red-500/20 px-5 py-2.5 rounded-full text-xs">✕ Reject</button></div></div>`;
   }
   el.innerHTML=html;
 }
+async function approvePlanPurchase(id){
+  if(!confirm("Approve? User ka plan Active hoga + Referrer ko 10% commission milega!")) return;
+  let pur=await dbGet(`planPurchases/${id}`);
+  if(!pur) return alert("Not found!");
+  await dbPatch(`my_plans/${pur.user}/${id}`,{status:"Active",claimedDays:0,totalEarned:0,lastClaim:0,activatedAt:new Date().toLocaleString()});
+  await dbDelete(`planPurchases/${id}`);
+  if(pur.referredBy){
+    let referrer=await dbGet(`users/${pur.referredBy}`);
+    if(referrer){
+      let commission=Math.floor(pur.amount*0.10);
+      await dbPatch(`users/${pur.referredBy}`,{balance:referrer.balance+commission,refEarnings:(referrer.refEarnings||0)+commission,teamPlansCount:(referrer.teamPlansCount||0)+1});
+      let refId=await dbPush(`my_referral_earnings/${pur.referredBy}`,{id:"",fromUser:pur.user,planName:pur.planName,planAmount:pur.amount,amount:commission,percent:10,date:new Date().toLocaleString(),status:"Paid"});
+      await dbPatch(`my_referral_earnings/${pur.referredBy}/${refId}`,{id:refId});
+      let totalRef=await dbGet(`total_referral_paid`)||0; await dbSet(`total_referral_paid`,totalRef+commission);
+    }
+  }
+  let total=await dbGet(`total_plans_sold`)||0; await dbSet(`total_plans_sold`,total+1);
+  alert(`✅ Plan Activated for ${pur.user}!`);
+  loadPlanPurchases(); loadAll();
+}
+async function rejectPlanPurchase(id){if(confirm("Reject plan purchase?")){let pur=await dbGet(`planPurchases/${id}`);await dbPatch(`my_plans/${pur.user}/${id}`,{status:"Rejected"});await dbDelete(`planPurchases/${id}`);loadPlanPurchases();}}
 
-async function updatePrice(id){
-  let newPrice = document.getElementById(`price_${id}`).value;
-  if(!newPrice || newPrice < 1) return alert("Sahi price likho!");
-  newPrice = parseInt(newPrice);
-  await dbPatch(`tasks/${id}`, {reward:newPrice});
-  alert(`✅ Price updated to Rs ${newPrice} - User app pe live change ho gaya!`);
-  loadTasks();
+// WITHDRAW REQUESTS - SHOWING NOW
+async function loadWithdraws(){
+  let withdraws=await dbGet(`withdraws`);
+  let el=document.getElementById('withdrawTable');
+  if(!withdraws){el.innerHTML="<div class='text-center py-10'><p class='text-3xl'>📭</p><p class='text-white/30 text-sm mt-2'>No pending withdrawal requests<br><span class='text-xs'>User withdraw karega to yahan ayega</span></p></div>";return;}
+  let html=""; Object.values(withdraws).reverse().forEach(req=>{
+    html+=`<div class="bg-yellow-500/[0.06] border border-yellow-500/20 rounded-2xl p-4 flex flex-col md:flex-row justify-between gap-3"><div><div class="flex flex-wrap items-center gap-2"><b class="text-sm">${req.user}</b><span class="bg-[#FFD700]/15 text-[#FFD700] border border-[#FFD700]/20 px-3 py-1 rounded-full text-[12px] font-bold">Rs ${req.amount}</span><span class="bg-white/10 px-3 py-1 rounded-full text-[11px]">${req.account}</span><span class="bg-yellow-500/15 text-yellow-400 px-3 py-1 rounded-full text-[10px]">${req.status}</span></div><p class="text-white/40 text-[11px] mt-2">${req.date}</p></div><div class="flex gap-2 shrink-0"><button onclick="approveW('${req.id}')" class="bg-[#00FF88]/20 text-[#00FF88] border border-[#00FF88]/30 px-5 py-2.5 rounded-full text-xs font-bold">✓ Approve Paid</button><button onclick="rejectW('${req.id}')" class="bg-red-500/15 text-red-400 border border-red-500/20 px-5 py-2.5 rounded-full text-xs">✕ Reject + Refund</button></div></div>`;
+  });
+  el.innerHTML=html;
+}
+async function approveW(id){if(!confirm("Approve withdraw? User ko payment bhej diya?"))return;let req=await dbGet(`withdraws/${id}`);await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Paid"});await dbDelete(`withdraws/${id}`);let total=await dbGet(`total_paid`)||0;await dbSet(`total_paid`,total+req.amount);alert(`✅ Withdraw Rs ${req.amount} Paid for ${req.user}`);loadWithdraws();loadAll();}
+async function rejectW(id){if(!confirm("Reject withdraw? Balance wapas user ko refund hoga!"))return;let req=await dbGet(`withdraws/${id}`);let user=await dbGet(`users/${req.user}`);if(user)await dbPatch(`users/${req.user}`,{balance:user.balance+req.amount});await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Rejected"});await dbDelete(`withdraws/${id}`);alert(`✅ Rejected + Rs ${req.amount} refunded to ${req.user}`);loadWithdraws();loadAll();}
+
+// CHAT SYSTEM - RE-ADDED
+async function loadChatsList(){
+  let allChats=await dbGet(`chats`)||{};
+  let el=document.getElementById('chatUsersList');
+  if(Object.keys(allChats).length==0){el.innerHTML="<p class='text-white/30 text-xs text-center py-6'>No chats yet<br>User message karega to yahan ayega</p>";return;}
+  let html=""; for(let user in allChats){
+    let msgs=Object.values(allChats[user]); let lastMsg=msgs[msgs.length-1];
+    let unread=msgs.filter(m=>m.sender==='user').length;
+    html+=`<div onclick="openChatUser('${user}')" class="bg-white/[0.04] border border-white/10 rounded-xl p-3 cursor-pointer hover:bg-white/[0.08] transition flex justify-between items-center gap-2"><div class="min-w-0"><p class="font-bold text-sm truncate">${user}</p><p class="text-white/40 text-[11px] truncate">${lastMsg.text.substring(0,25)}...</p></div><div class="text-right shrink-0"><span class="bg-[#00D2FF]/20 text-[#00D2FF] px-2 py-1 rounded-full text-[9px] font-bold">${msgs.length}</span></div></div>`;
+  }
+  el.innerHTML=html;
+}
+async function openChatUser(userName){
+  currentChatUserName=userName;
+  document.getElementById('currentChatUser').innerText=userName;
+  let msgs=await dbGet(`chats/${userName}`)||{};
+  let el=document.getElementById('adminChatMessages');
+  let arr=Object.values(msgs).sort((a,b)=>a.time-b.time);
+  if(arr.length==0){el.innerHTML="<p class='text-white/30 text-center py-10'>No messages</p>";return;}
+  el.innerHTML=arr.map(m=>{
+    let isUser=m.sender==='user';
+    return `<div class="flex ${isUser?'justify-start':'justify-end'}"><div class="${isUser?'bg-white/[0.08] border border-white/10':'bg-gradient-to-r from-[#00D2FF] to-[#7A5CFF]'} max-w-[80%] px-4 py-3 rounded-2xl"><p class="text-[13px]">${m.text}</p><p class="text-[9px] mt-1 opacity-60">${m.date} • ${m.sender}</p></div></div>`;
+  }).join('');
+  el.scrollTop=el.scrollHeight;
+}
+async function sendAdminMessage(){
+  if(!currentChatUserName) return alert("Select a user first!");
+  let input=document.getElementById('adminChatInput');
+  let text=input.value.trim(); if(!text)return;
+  input.value="";
+  let msg={text:text, sender:'admin', time:Date.now(), date:new Date().toLocaleString(), user:currentChatUserName};
+  await dbPush(`chats/${currentChatUserName}`, msg);
+  await openChatUser(currentChatUserName);
+  loadChatsList();
 }
 
-async function toggleTask(id){let t=await dbGet(`tasks/${id}`);await dbPatch(`tasks/${id}`,{active:!t.active});loadTasks();}
-async function deleteTask(id){if(confirm("Delete task? User app se gayab ho jayega!")){await dbDelete(`tasks/${id}`);loadTasks();}}
-async function editTaskFull(id){
-  let t=await dbGet(`tasks/${id}`);
-  let name=prompt("Edit Task Name:", t.name); if(name===null) return;
-  let reward=prompt("Edit Price / Reward Rs:", t.reward); if(reward===null) return;
-  let link=prompt("Edit Link (https://...):", t.link); if(link===null) return;
-  let icon=prompt("Edit Icon emoji (✈️ 📸 ▶️ 🎁):", t.icon); if(icon===null) return;
-  await dbPatch(`tasks/${id}`, {name:name||t.name, reward:parseInt(reward)||t.reward, link:link, icon:icon||t.icon});
-  alert("✅ Task Updated!");
-  loadTasks();
+// USERS MANAGEMENT WITH DELETE
+function renderUsers(){
+  let search=(document.getElementById('searchUser')?.value||"").toLowerCase();
+  let html=""; let count=0;
+  for(let u in allUsersData){
+    if(search&&!u.toLowerCase().includes(search))continue;
+    count++;
+    let refEarn=allUsersData[u].refEarnings||0; let teamPlans=allUsersData[u].teamPlansCount||0; let bal=allUsersData[u].balance||0;
+    html+=`<div class="bg-white/[0.04] border border-white/10 rounded-xl p-3 flex flex-col md:flex-row justify-between gap-3"><div class="min-w-0"><div class="flex flex-wrap items-center gap-2"><b class="text-sm">${u}</b><span class="bg-white/10 px-2.5 py-1 rounded-full text-[10px]">ID: ${allUsersData[u].id||'N/A'}</span><span class="bg-[#00FF88]/15 text-[#00FF88] px-2.5 py-1 rounded-full text-[10px]">Bal Rs ${bal}</span><span class="bg-[#FFD700]/15 text-[#FFD700] px-2.5 py-1 rounded-full text-[10px]">Ref Rs ${refEarn}</span></div><p class="text-white/40 text-[11px] mt-1">Plans: ${teamPlans} | ReferredBy: ${allUsersData[u].referredBy||'None'} | Joined: ${allUsersData[u].joined||'N/A'} | Team: ${allUsersData[u].myTeam?allUsersData[u].myTeam.length:0} members</p></div><div class="flex gap-1.5 shrink-0 flex-wrap"><button onclick="viewUserDetails('${u}')" class="bg-white/10 px-3 py-1.5 rounded-full text-[11px]">View</button><button onclick="editBal('${u}')" class="bg-[#00FF88]/15 text-[#00FF88] px-3 py-1.5 rounded-full text-[11px]">Bal Edit</button><button onclick="openChatUser('${u}')" class="bg-[#00D2FF]/15 text-[#00D2FF] px-3 py-1.5 rounded-full text-[11px]">Chat</button><button onclick="deleteUser('${u}')" class="bg-red-500/20 text-red-400 border border-red-500/20 px-3 py-1.5 rounded-full text-[11px] font-bold">🗑️ Delete</button></div></div>`;
+  }
+  let el=document.getElementById('usersTable');
+  el.innerHTML=html||"<p class='text-white/30 text-center py-8'>No users found</p>";
+  if(search) el.innerHTML+=`<p class="text-center text-white/20 text-[11px] mt-4">${count} users found for "${search}"</p>`;
 }
+async function viewUserDetails(userName){
+  let user=await dbGet(`users/${userName}`);
+  let myPlans=await dbGet(`my_plans/${userName}`)||{};
+  let myWithdraws=await dbGet(`my_withdraws/${userName}`)||{};
+  let myRef=await dbGet(`my_referral_earnings/${userName}`)||{};
+  document.getElementById('userDetailModal').classList.add('active');
+  document.getElementById('detailUserName').innerText=userName;
+  document.getElementById('userDetailContent').innerHTML=`
+    <div class="grid grid-cols-2 gap-3">
+      <div class="bg-black/30 rounded-xl p-3"><p class="text-[10px] text-white/40 uppercase">Balance</p><p class="font-bold">Rs ${user.balance||0}</p></div>
+      <div class="bg-black/30 rounded-xl p-3"><p class="text-[10px] text-white/40 uppercase">Ref Earnings</p><p class="font-bold text-[#FFD700]">Rs ${user.refEarnings||0}</p></div>
+      <div class="bg-black/30 rounded-xl p-3"><p class="text-[10px] text-white/40 uppercase">ID</p><p class="font-bold text-xs">${user.id||'N/A'}</p></div>
+      <div class="bg-black/30 rounded-xl p-3"><p class="text-[10px] text-white/40 uppercase">Referred By</p><p class="font-bold text-xs">${user.referredBy||'None'}</p></div>
+    </div>
+    <div class="mt-4 bg-white/[0.04] rounded-xl p-3"><p class="text-[11px] font-bold">Plans: ${Object.keys(myPlans).length} | Withdraws: ${Object.keys(myWithdraws).length} | Referral Earnings: ${Object.keys(myRef).length}</p><p class="text-[11px] text-white/40 mt-1">Team: ${user.myTeam?user.myTeam.length:0} members | Joined: ${user.joined||'N/A'}</p></div>
+    <div class="mt-4 flex gap-2"><button onclick="editBal('${userName}')" class="flex-1 bg-[#00FF88]/15 text-[#00FF88] rounded-xl py-3 text-sm font-bold">Edit Balance</button><button onclick="if(confirm('Delete user ${userName}? All data will be deleted!')){deleteUser('${userName}');document.getElementById('userDetailModal').classList.remove('active');}" class="flex-1 bg-red-500/20 text-red-400 rounded-xl py-3 text-sm font-bold">🗑️ Delete Account</button></div>
+  `;
+}
+async function editBal(u){let amt=prompt(`Edit balance for ${u}\nCurrent: Rs ${allUsersData[u].balance}\n\nEnter amount to ADD (use - to subtract):\nExample: 100 to add, -50 to subtract`);if(!amt)return;let num=parseInt(amt);if(isNaN(num))return alert("Invalid number!");await dbPatch(`users/${u}`,{balance:allUsersData[u].balance+num});alert(`✅ Balance updated for ${u}: Rs ${allUsersData[u].balance} → Rs ${allUsersData[u].balance+num}`);loadAll();}
+async function deleteUser(userName){
+  if(!confirm(`⚠️ DELETE USER: ${userName}?\n\nThis will delete:\n- User account\n- All plans\n- All withdraws\n- All chats\n- All referral earnings\n- Team references\n\nAre you SURE?`)) return;
+  if(!confirm(`FINAL CONFIRM: Delete ${userName} permanently?\n\nType OK to confirm.`)) return;
 
-async function createPromo(){let code=document.getElementById('promoCode').value.trim().toUpperCase();let reward=parseInt(document.getElementById('promoReward').value);let max=parseInt(document.getElementById('promoMax').value)||9999;if(!code||!reward)return alert("Code & Reward!");await dbSet(`promoCodes/${code}`,{reward:reward,active:true,maxUses:max,usedCount:0,createdAt:new Date().toLocaleString()});alert(`${code} created`);loadPromos();}
-async function loadPromos(){let promos=await dbGet(`promoCodes`);let el=document.getElementById('promoList');if(!promos){el.innerHTML="<p class='text-white/30 text-xs'>No custom codes</p>";return;}let html="";for(let c in promos){let p=promos[c];html+=`<div class="bg-white/5 p-3 rounded-xl flex justify-between items-center"><div><b class="text-[#FF3BD4]">${c}</b> - Rs ${p.reward} | ${p.usedCount||0}/${p.maxUses}</div><div class="flex gap-1"><button onclick="togglePromo('${c}')" class="bg-white/10 px-2 py-1 rounded-full text-xs">Toggle</button><button onclick="deletePromo('${c}')" class="bg-red-500/20 text-red-400 px-2 py-1 rounded-full text-xs">Del</button></div></div>`;}el.innerHTML=html;}
-async function togglePromo(c){let p=await dbGet(`promoCodes/${c}`);await dbPatch(`promoCodes/${c}`,{active:!p.active});loadPromos();}
-async function deletePromo(c){if(confirm(`Delete ${c}?`)){await dbDelete(`promoCodes/${c}`);loadPromos();}}
-async function editBal(u){let amt=prompt("Add/Cut:");if(!amt)return;await dbPatch(`users/${u}`,{balance:allUsersData[u].balance+parseInt(amt)});loadAll();}
-async function deleteUser(u){if(confirm(`Delete ${u}?`)){await dbDelete(`users/${u}`);loadAll();}}
-async function approveW(id){let req=await dbGet(`withdraws/${id}`);await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Paid"});await dbDelete(`withdraws/${id}`);let total=await dbGet(`total_paid`)||0;await dbSet(`total_paid`,total+req.amount);loadAll();}
-async function rejectW(id){let req=await dbGet(`withdraws/${id}`);let user=await dbGet(`users/${req.user}`);if(user)await dbPatch(`users/${req.user}`,{balance:user.balance+req.amount});await dbPatch(`my_withdraws/${req.user}/${id}`,{status:"Rejected"});await dbDelete(`withdraws/${id}`);loadAll();}
+  // Delete all user data
+  await dbDelete(`users/${userName}`);
+  await dbDelete(`my_plans/${userName}`);
+  await dbDelete(`my_withdraws/${userName}`);
+  await dbDelete(`my_referral_earnings/${userName}`);
+  await dbDelete(`chats/${userName}`);
+  await dbDelete(`my_deposits/${userName}`);
+
+  // Remove from referrer's team list
+  for(let otherUser in allUsersData){
+    let team=allUsersData[otherUser].myTeam||[];
+    let newTeam=team.filter(m=>m.name!==userName);
+    if(newTeam.length!==team.length){
+      await dbPatch(`users/${otherUser}`,{myTeam:newTeam});
+    }
+  }
+
+  // Delete from pending requests if exists
+  let planPurchases=await dbGet(`planPurchases`)||{};
+  for(let id in planPurchases){
+    if(planPurchases[id].user===userName){
+      await dbDelete(`planPurchases/${id}`);
+    }
+  }
+  let withdraws=await dbGet(`withdraws`)||{};
+  for(let id in withdraws){
+    if(withdraws[id].user===userName){
+      await dbDelete(`withdraws/${id}`);
+    }
+  }
+
+  alert(`✅ User ${userName} deleted permanently!`);
+  loadAll(); loadPlanPurchases(); loadWithdraws(); loadChatsList();
+}
 </script>
 </body>
 </html>
